@@ -1,0 +1,46 @@
+---
+// Wiederverwendbare Vorteile-/Feature-Sektion.
+interface Props {
+  kicker?: string;
+  heading?: string;
+  lead?: string;
+}
+const {
+  kicker = 'ihre vorteile',
+  heading = 'Technisch perfekt gebaut',
+  lead = 'Keine Vorlage von der Stange: Wir bauen schnelle, saubere Webseiten, die bei Google und modernen KI-Assistenten bestens ankommen.',
+} = Astro.props;
+
+const items = [
+  { t: 'Maßgeschneidertes Design', d: 'Individuell auf Ihre Marke gebaut – kein Baukasten, keine 08/15-Vorlage.' },
+  { t: 'Top für Google & KI-Chatbots', d: 'Technisch sauber umgesetzt, damit Suchmaschinen und KI-Assistenten Ihre Inhalte perfekt erfassen.' },
+  { t: 'Blitzschnelle Ladezeiten', d: 'Schlanker, moderner Code für Performance, die Besucher und Google belohnen.' },
+  { t: 'Perfekt auf jedem Gerät', d: 'Vom Smartphone bis zum großen Desktop – immer gestochen scharf und bedienbar.' },
+  { t: 'Selbst pflegbar', d: 'Modular aufgebaut: Inhalte ändern Sie bei Bedarf einfach selbst – ohne Technikkenntnisse.' },
+  { t: 'Sicher & gewartet', d: 'Updates, Sicherheitsmaßnahmen und Backups halten Ihre Seite dauerhaft stabil und geschützt.' },
+];
+---
+
+<section class="section section--tint section--center">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">{kicker}</p>
+      <h2>{heading}</h2>
+      {lead && <p class="lead">{lead}</p>}
+    </div>
+    <div class="grid grid--3 adv-grid">
+      {items.map((i) => (
+        <div class="card adv-card" data-reveal data-tilt>
+          <h3>{i.t}</h3>
+          <p>{i.d}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .adv-grid { margin-top: 1.25rem; text-align: left; }
+  .adv-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+  .adv-card p { font-size: 0.96rem; margin: 0; color: var(--ink-soft); }
+</style>

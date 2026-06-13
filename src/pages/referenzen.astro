@@ -5,51 +5,43 @@ import PageHero from '../components/PageHero.astro';
 
 import theEase from '../assets/images/ref/the-ease.png';
 import chinWoo from '../assets/images/ref/chin-woo.png';
-import robertLeitinger from '../assets/images/ref/robert-leitinger.png';
 import kraftvoll from '../assets/images/ref/kraftvoll.png';
-import adlerblick from '../assets/images/ref/adlerblick.png';
 import physiotherapie from '../assets/images/ref/physiotherapie.png';
 import veritec from '../assets/images/ref/veritec.png';
 import drBuergel from '../assets/images/ref/dr-buergel.png';
-import blickwinkel from '../assets/images/ref/99blickwinkel.png';
-import micropart from '../assets/images/ref/micropart.png';
-import podologie from '../assets/images/ref/podologie.png';
-import lifestyyler from '../assets/images/ref/lifestyyler.png';
 
 const projekte = [
-  { img: theEase, name: 'THE EASE – Chiropraktik', tag: 'Onepager · Webdesign' },
-  { img: chinWoo, name: 'Chin-Woo Energieoase', tag: 'Webdesign · Kung-Fu-Schule' },
+  { img: theEase, name: 'THE EASE – Chiropraktik', tag: 'Webdesign · Onepager' },
   { img: veritec, name: 'Veritec Solution GmbH', tag: 'Webdesign · Elektrotechnik' },
-  { img: adlerblick, name: 'Adlerblick Onlineshop', tag: 'Onlineshop · WooCommerce' },
   { img: physiotherapie, name: 'Physiotherapie Salzburg', tag: 'Webdesign · Praxis' },
   { img: drBuergel, name: 'Hausarzt Dr. Bürgel', tag: 'Webdesign · Arztpraxis' },
-  { img: blickwinkel, name: '99blickwinkel', tag: 'Magazin · Webdesign' },
-  { img: micropart, name: 'Micropart Onlineshop', tag: 'Onlineshop · WooCommerce' },
-  { img: podologie, name: 'Podologie Kolb', tag: 'Webdesign · Praxis' },
+  { img: chinWoo, name: 'Chin-Woo Energieoase', tag: 'Webdesign · Kung-Fu-Schule' },
   { img: kraftvoll, name: 'Kraftvoll & Sicher', tag: 'Webdesign · Coaching' },
-  { img: lifestyyler, name: 'Lifestyle-Magazin', tag: 'Magazin · Webdesign' },
-  { img: robertLeitinger, name: 'Robert Leitinger', tag: 'Personal Brand · SEO' },
 ];
 ---
 
 <BaseLayout
   title="Referenzen & Projekte » CodeRocker"
-  description="Spannende Projekte und glückliche Kunden ᐅ Unsere Referenzen und unser Webdesign-Portfolio aus der Region Salzburg und der gesamten DACH-Region."
+  description="Spannende Projekte und glückliche Kunden ᐅ Ein Auszug aus unseren Referenzen und unserem Webdesign-Portfolio für Kunden im gesamten DACH-Raum."
   path="/referenzen/"
 >
   <PageHero
     eyebrow="referenzen"
     title='Großartige Projekte, großartige <span class="grad-text">Kunden</span>'
-    lead="Ein Auszug aus unserem Portfolio: Webseiten und Onlineshops, die wir für Unternehmen aus den unterschiedlichsten Branchen umgesetzt haben."
+    lead="Webseiten, die wir für Unternehmen aus den unterschiedlichsten Branchen umgesetzt haben – modern, schnell und auf Wirkung gebaut."
   />
 
   <section class="section">
     <div class="container">
+      <div class="section-head">
+        <p class="kicker">portfolio</p>
+        <h2>Ein Auszug aus unseren Referenzen</h2>
+      </div>
       <div class="ref-grid">
         {projekte.map((p) => (
           <figure class="ref-card" data-reveal data-tilt>
             <div class="ref-img">
-              <Image src={p.img} alt={p.name} width={760} height={532} quality={82} />
+              <Image src={p.img} alt={p.name} width={900} height={563} quality={84} />
             </div>
             <figcaption>
               <h3>{p.name}</h3>
@@ -71,22 +63,27 @@ const projekte = [
 </BaseLayout>
 
 <style>
-  .ref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .ref-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
   .ref-card {
-    margin: 0; background: var(--surface-glass); border: 1px solid var(--line);
-    border-radius: var(--radius); overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative; margin: 0; overflow: hidden;
+    border-radius: var(--radius); border: 1px solid var(--line);
+    aspect-ratio: 16 / 10; background: var(--paper-tint);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
   }
-  .ref-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
-  .ref-img { overflow: hidden; aspect-ratio: 500 / 350; background: var(--paper-tint); }
-  .ref-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-  .ref-card:hover .ref-img :global(img) { transform: scale(1.05); }
-  .ref-card figcaption { padding: 1.25rem 1.4rem 1.5rem; }
-  .ref-card h3 { font-size: 1.2rem; margin: 0 0 0.2rem; }
-  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); margin: 0; }
+  .ref-img { position: absolute; inset: 0; }
+  .ref-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .ref-card::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.30) 42%, transparent 68%);
+  }
+  .ref-card figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 1.6rem 1.7rem; }
+  .ref-card h3 { margin: 0 0 0.25rem; font-size: clamp(1.25rem, 2.2vw, 1.55rem); }
+  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: #cdbbff; margin: 0; }
+  .ref-card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: var(--shadow), var(--glow); }
+  .ref-card:hover .ref-img :global(img) { transform: scale(1.06); }
+
   .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
   .cta-band h2 { margin-bottom: 0.75rem; }
 
-  @media (max-width: 900px) { .ref-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .ref-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .ref-grid { grid-template-columns: 1fr; } }
 </style>
