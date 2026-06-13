@@ -194,9 +194,9 @@ const refs = [
   /* REFERENZEN-TEASER (Premium-Box mit gepolstertem Mockup) */
   .ref-card { margin: 0; display: flex; flex-direction: column; background: linear-gradient(155deg, #242029 0%, #19161f 52%, #241c18 100%); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
   .ref-card:hover { transform: translateY(-6px); box-shadow: 0 40px 80px -40px rgba(0,0,0,0.85), var(--glow); border-color: var(--line-strong); }
-  .ref-media { border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; background: var(--paper-tint); box-shadow: 0 22px 45px -22px rgba(0,0,0,0.9); }
-  .ref-media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.55s ease; }
-  .ref-card:hover .ref-media :global(img) { transform: scale(1.04); }
+  .ref-media { line-height: 0; }
+  .ref-media :global(img) { width: 100%; height: auto; display: block; object-fit: contain; filter: drop-shadow(0 22px 30px rgba(0,0,0,0.55)); transition: transform 0.5s ease; }
+  .ref-card:hover .ref-media :global(img) { transform: scale(1.03) translateY(-2px); }
   .ref-card figcaption { padding-top: 1.2rem; }
   .ref-card h3 { font-size: 1.15rem; margin: 0 0 0.25rem; }
   .ref-tag { font-family: var(--font-mono); font-size: 0.78rem; color: #b3a4e0; margin: 0; }
