@@ -51,7 +51,7 @@ const leistungen = [
     <div class="container">
       <div class="grid grid--2">
         {leistungen.map((l) => (
-          <a href={l.href} class="card leistung-card" data-reveal>
+          <a href={l.href} class="card leistung-card" data-reveal data-tilt>
             <div class="leistung-img">
               <Image src={l.img} alt={l.title} width={820} height={546} quality={85} />
             </div>

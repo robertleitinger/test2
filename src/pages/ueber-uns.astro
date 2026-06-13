@@ -59,7 +59,7 @@ const office = [office1, office2, office3, office4, office5];
       </div>
       <div class="grid grid--4">
         {team.map((m) => (
-          <div class:list={['team-card', { open: m.name === 'Du?' }]} data-reveal>
+          <div class:list={['team-card', { open: m.name === 'Du?' }]} data-reveal data-tilt>
             <div class="team-photo">
               <Image src={m.img} alt={m.name} width={560} height={700} quality={85} />
             </div>
