@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site } from '../../data/site';
+import robert from '../../assets/images/robert-consultant.png';
+
+const services = [
+  {
+    t: 'SEO-Beratung & Coaching',
+    d: 'Individuelle Schulungen und Coaching zu allen SEO-Themen – praxisnah, auf Ihr Unternehmen zugeschnitten. Vor Ort oder per Videokonferenz.',
+  },
+  {
+    t: 'Speaker auf Events',
+    d: 'Als Speaker bei Seminaren, Marketing-Events und Konferenzen bringe ich SEO-Wissen verständlich und mit echten Beispielen auf die Bühne.',
+  },
+];
+---
+
+<BaseLayout
+  title="SEO Consultant » CodeRocker"
+  description="Robert Leitinger – Ihr SEO Consultant mit über 11 Jahren Erfahrung. Professionelle SEO-Beratung, Coaching und Schulungen für Sie und Ihr Team in der DACH-Region."
+  path="/leistungen/seo-consultant/"
+>
+  <PageHero
+    eyebrow="// leistungen / seo consulting"
+    title='SEO Schulungen &amp; <span class="grad-text">Beratung</span>'
+    lead="Professionelle SEO-Beratung mit Erfahrung seit 2010. Ich gebe mein Wissen weiter – an Unternehmen, Teams und auf der Bühne."
+  />
+
+  <!-- VORSTELLUNG -->
+  <section class="section">
+    <div class="container founder">
+      <div class="founder-photo" data-reveal>
+        <Image src={robert} alt={`${site.owner}, SEO Consultant`} width={460} height={367} />
+        <p class="rating-line"><span class="stars">★★★★★</span> {site.rating} / 5,0</p>
+      </div>
+      <div class="founder-text" data-reveal>
+        <p class="eyebrow">// hallo</p>
+        <h2>Ich stelle mich kurz vor</h2>
+        <p class="lead">
+          Mein Name ist {site.owner} und ich bin Ihr SEO Consultant. Mit mehr als
+          {site.experienceYears} Jahren Erfahrung in der Suchmaschinenoptimierung und vielen
+          erfolgreichen Projekten kann ich auch Ihnen mit meinem Wissen weiterhelfen.
+        </p>
+        <p>
+          Angefangen habe ich 2010 mit der Entwicklung eigener Blogs. 2017 habe ich CodeRocker
+          als Online-Marketing-Agentur gegründet, mit klarem Fokus auf lokale Suchmaschinen­optimierung.
+          Heute gebe ich dieses Wissen in Schulungen, Coachings und Vorträgen weiter.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEISTUNGEN -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head section--center">
+        <p class="eyebrow">// meine consulting-leistungen</p>
+        <h2>SEO Consulting &amp; Schulungen</h2>
+      </div>
+      <div class="grid grid--2">
+        {services.map((s) => (
+          <div class="card consult-card" data-reveal>
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+          </div>
+        ))}
+      </div>
+      <p class="region-note" data-reveal>
+        Einsatzgebiete: gesamte DACH-Region (Österreich, Deutschland, Schweiz) –
+        mit Schwerpunkt auf Salzburg, Bayern und die umliegenden Regionen.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>SEO-Wissen für Sie und Ihr Team?</h2>
+      <p class="lead">Sprechen wir über Ihre Ziele – ich erstelle Ihnen ein passendes Schulungs- oder Beratungsangebot.</p>
+      <a href="/kontakt/" class="btn btn--grad">Beratung anfragen <span class="arrow">→</span></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .founder { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .founder-photo :global(img) { width: 100%; height: auto; border-radius: var(--radius); }
+  .rating-line { margin: 1rem 0 0; font-weight: 500; }
+  .consult-card h3 { margin-bottom: 0.5rem; }
+  .consult-card p { margin: 0; }
+  .region-note { margin-top: 2rem; text-align: center; color: #6a6690; font-size: 0.95rem; }
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+  @media (max-width: 760px) { .founder { grid-template-columns: 1fr; } .founder-photo { max-width: 340px; } }
+</style>

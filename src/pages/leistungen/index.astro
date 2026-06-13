@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+
+import serviceWebdesign from '../../assets/images/service-webdesign.png';
+import serviceSeo from '../../assets/images/service-seo.png';
+import serviceWordpress from '../../assets/images/service-wordpress.png';
+import heroConsulting from '../../assets/images/consulting-2.jpg';
+
+const leistungen = [
+  {
+    img: serviceWebdesign,
+    title: 'Webdesign',
+    text: 'Professionelles Webdesign zu fairen Preisen. Perfekt für alle Endgeräte optimiert, DSGVO-konform und standardmäßig für Suchmaschinen vorbereitet.',
+    href: '/leistungen/webdesign/',
+  },
+  {
+    img: serviceSeo,
+    title: 'Suchmaschinenoptimierung',
+    text: 'Lokales SEO und umfassende Optimierung inklusive Analyse und Keyword-Tracking – damit Sie bei Google besser gefunden werden und mehr Kunden gewinnen.',
+    href: '/leistungen/seo/',
+  },
+  {
+    img: serviceWordpress,
+    title: 'WordPress Agentur',
+    text: 'Wir erstellen, erweitern und betreuen WordPress-Webseiten. Als spezialisierte Agentur holen wir das Beste aus dem weltweit beliebtesten CMS heraus.',
+    href: '/leistungen/wordpress-agentur/',
+  },
+  {
+    img: heroConsulting,
+    title: 'SEO Consulting & Schulungen',
+    text: 'SEO-Beratung, Coaching und Schulungen für Sie und Ihr Team – individuell, vor Ort oder per Videokonferenz.',
+    href: '/leistungen/seo-consultant/',
+  },
+];
+---
+
+<BaseLayout
+  title="Leistungen » CodeRocker"
+  description="Unsere Leistungen im Überblick: Webdesign, SEO, WordPress und Consulting. Alles aus einer Hand für Ihren Erfolg im Web – aus Hallein bei Salzburg."
+  path="/leistungen/"
+>
+  <PageHero
+    eyebrow="// leistungen"
+    title="Unsere Leistungen im Überblick"
+    lead="Von der ersten Idee bis zur dauerhaften Sichtbarkeit bei Google: Wir begleiten Ihren digitalen Auftritt mit Leistungen, die ineinandergreifen."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2">
+        {leistungen.map((l) => (
+          <a href={l.href} class="card leistung-card" data-reveal>
+            <div class="leistung-img">
+              <Image src={l.img} alt={l.title} width={560} height={373} />
+            </div>
+            <div class="leistung-body">
+              <h2>{l.title}</h2>
+              <p>{l.text}</p>
+              <span class="card-link">Mehr erfahren <span class="arrow">→</span></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Sie wissen nicht, welche Leistung passt?</h2>
+      <p class="lead">Im kostenlosen Erstgespräch finden wir gemeinsam heraus, was Ihr Projekt wirklich braucht.</p>
+      <a href="/kontakt/" class="btn btn--grad">Jetzt Kontakt aufnehmen <span class="arrow">→</span></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .leistung-card { display: flex; flex-direction: column; color: var(--ink-2); text-decoration: none; padding: 0; overflow: hidden; }
+  .leistung-card:hover { text-decoration: none; }
+  .leistung-img :global(img) { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+  .leistung-card:hover .leistung-img :global(img) { transform: scale(1.04); }
+  .leistung-body { padding: 1.75rem; }
+  .leistung-body h2 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-bottom: 0.6rem; }
+  .leistung-body p { font-size: 0.98rem; }
+  .card-link { font-family: var(--font-display); font-weight: 600; color: var(--brand); }
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+</style>

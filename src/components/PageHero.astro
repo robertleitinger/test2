@@ -1,0 +1,25 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<section class="page-hero section--ink">
+  <div class="container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1><Fragment set:html={title} /></h1>
+    {lead && <p class="lead page-hero-lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding-block: clamp(5.5rem, 12vw, 8rem) clamp(3rem, 7vw, 5rem);
+  }
+  .page-hero h1 { max-width: 18ch; }
+  .page-hero-lead { color: var(--ink-soft); margin-top: 1.25rem; }
+</style>

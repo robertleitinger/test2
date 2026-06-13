@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Statische Astro-Ausgabe – die Trailing-Slash-/Directory-URLs werden von
+# Astro erzeugt; Netlify liefert sie unverändert aus.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
