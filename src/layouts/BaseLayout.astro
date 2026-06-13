@@ -94,6 +94,21 @@ const jsonLd = {
     <div class="fx-aurora" aria-hidden="true" transition:persist></div>
     <div class="fx-grain" aria-hidden="true" transition:persist></div>
     <div class="scroll-progress" aria-hidden="true" transition:persist><span></span></div>
+
+    <!-- Full-Screen Projektanfrage-Popup (Inhalt folgt: externes Formular) -->
+    <div class="form-modal" id="form-modal" role="dialog" aria-modal="true" aria-labelledby="form-modal-title" hidden transition:persist>
+      <div class="form-modal__backdrop" data-close-form></div>
+      <div class="form-modal__panel">
+        <button class="form-modal__close" type="button" aria-label="Schließen" data-close-form>✕</button>
+        <div class="form-modal__inner">
+          <p class="eyebrow">// projektanfrage</p>
+          <h2 id="form-modal-title">Erzählen Sie uns von Ihrem Projekt</h2>
+          <p>Schildern Sie kurz Ihr Vorhaben – wir melden uns zeitnah mit den nächsten Schritten. Das Erstgespräch ist kostenlos und unverbindlich.</p>
+          <div class="form-modal__embed" id="external-form">Formular wird hier eingebunden</div>
+        </div>
+      </div>
+    </div>
+
     <Header heroDark={heroDark} transition:persist="site-header" />
     <main id="main">
       <slot />
@@ -118,6 +133,35 @@ const jsonLd = {
         };
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Full-Screen-Projektanfrage-Popup
+        const modal = document.getElementById('form-modal');
+        if (modal) {
+          let lastFocus: HTMLElement | null = null;
+          const openModal = () => {
+            lastFocus = document.activeElement as HTMLElement;
+            modal.hidden = false;
+            requestAnimationFrame(() => modal.classList.add('is-open'));
+            document.body.classList.add('modal-open');
+            (modal.querySelector('.form-modal__close') as HTMLElement | null)?.focus();
+          };
+          const closeModal = () => {
+            modal.classList.remove('is-open');
+            document.body.classList.remove('modal-open');
+            setTimeout(() => { modal.hidden = true; }, 400);
+            lastFocus?.focus();
+          };
+          // Öffnen (Capture-Phase, damit der ClientRouter den <a>-Klick nicht abfängt)
+          document.addEventListener('click', (e) => {
+            const target = e.target as Element;
+            const opener = target.closest('[data-open-form]');
+            if (opener) { e.preventDefault(); e.stopPropagation(); openModal(); return; }
+            if (target.closest('[data-close-form]')) { e.preventDefault(); e.stopPropagation(); closeModal(); }
+          }, true);
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+          });
+        }
 
         // Site-weiter WebGL-Nebel-Shader
         const sc = document.querySelector<HTMLCanvasElement>('canvas.fx-shader');

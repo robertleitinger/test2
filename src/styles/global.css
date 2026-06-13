@@ -5,10 +5,11 @@
    Gradient-Akzente, Code-Kommentar-Eyebrows).
    ========================================================= */
 
-@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/sora/500.css';
+@import '@fontsource/sora/600.css';
+@import '@fontsource/sora/700.css';
+@import '@fontsource/sora/800.css';
 @import '@fontsource/space-grotesk/500.css';
-@import '@fontsource/space-grotesk/600.css';
-@import '@fontsource/space-grotesk/700.css';
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
@@ -23,12 +24,12 @@
   --cyan: #4be3d8;           /* seltener kühler Spark */
   --gold: #ffc320;           /* sehr sparsam: Sterne */
 
-  /* Flächen (dunkel) */
-  --bg: #08061a;             /* Seiten-Basis */
-  --bg-deep: #050410;        /* tiefste Sektionen / Footer / Hero */
-  --paper: #14102f;          /* Karten-Oberfläche */
-  --paper-tint: #0e0b24;     /* abgesetzte Panel-Sektion */
-  --surface-glass: rgba(255, 255, 255, 0.04);
+  /* Flächen (pures Schwarz + Brand-Akzente) */
+  --bg: #050506;             /* Seiten-Basis – nahezu pures Schwarz */
+  --bg-deep: #000000;        /* tiefste Sektionen / Footer / Hero */
+  --paper: #0b0911;          /* Karten-Oberfläche */
+  --paper-tint: #070709;     /* abgesetzte Panel-Sektion */
+  --surface-glass: rgba(255, 255, 255, 0.035);
 
   /* Text */
   --ink: #ffffff;            /* Überschriften / starker Text */
@@ -45,7 +46,7 @@
   --grad-soft: linear-gradient(120deg, #7a52ff 0%, #c06bff 100%);
 
   /* Typo */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'Sora', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
@@ -81,11 +82,11 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
   color: var(--ink);
   margin: 0 0 0.5em;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 h1 { font-size: clamp(2.6rem, 6.5vw, 4.75rem); }
@@ -113,14 +114,14 @@ li { margin-bottom: 0.4em; }
   position: relative;
 }
 .section--tint {
-  background: rgba(18, 14, 42, 0.5);
-  backdrop-filter: blur(34px);
-  -webkit-backdrop-filter: blur(34px);
+  background: rgba(8, 8, 10, 0.62);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 .section--ink {
-  background: rgba(5, 4, 16, 0.46);
-  backdrop-filter: blur(34px);
-  -webkit-backdrop-filter: blur(34px);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   position: relative;
   overflow: hidden;
 }
@@ -327,8 +328,8 @@ li { margin-bottom: 0.4em; }
   z-index: -2;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(8, 6, 26, 0.55), rgba(8, 6, 26, 0.42) 40%, rgba(8, 6, 26, 0.6)),
-    radial-gradient(120% 80% at 50% 0%, transparent 40%, rgba(5, 4, 16, 0.55) 100%);
+    linear-gradient(180deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.58) 45%, rgba(0, 0, 0, 0.74)),
+    radial-gradient(120% 80% at 50% 0%, transparent 35%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 /* Driftende Ambient-Aurora (Fallback hinter dem Shader) */
@@ -441,6 +442,54 @@ li { margin-bottom: 0.4em; }
 }
 .kinetic__track .fill { color: #fff; -webkit-text-stroke: 0; }
 .kinetic__track .dot { color: var(--magenta); -webkit-text-stroke: 0; }
+
+/* ---------- Full-Screen Form-Popup ---------- */
+.form-modal {
+  position: fixed; inset: 0; z-index: 500;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.form-modal.is-open { opacity: 1; visibility: visible; }
+.form-modal__backdrop {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(70% 60% at 50% 28%, rgba(124, 70, 255, 0.22), transparent 70%),
+    radial-gradient(50% 50% at 85% 90%, rgba(180, 92, 255, 0.16), transparent 70%),
+    #000;
+}
+.form-modal__panel {
+  position: relative; height: 100%; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  transform: scale(0.985) translateY(8px);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.form-modal.is-open .form-modal__panel { transform: none; }
+.form-modal__panel::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: var(--grad);
+}
+.form-modal__inner { width: 100%; max-width: 760px; text-align: center; }
+.form-modal__inner .eyebrow { margin-inline: auto; }
+.form-modal__inner h2 { font-size: clamp(2rem, 5vw, 3.25rem); }
+.form-modal__inner p { color: var(--ink-soft); max-width: 52ch; margin-inline: auto; }
+.form-modal__embed {
+  margin-top: 2rem; min-height: 320px;
+  border: 1px dashed var(--line-strong); border-radius: var(--radius);
+  display: grid; place-items: center;
+  color: var(--ink-faint); font-family: var(--font-mono); font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+.form-modal__close {
+  position: absolute; top: clamp(1rem, 3vw, 1.75rem); right: clamp(1rem, 3vw, 2rem);
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line-strong);
+  color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer;
+  display: grid; place-items: center;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.form-modal__close:hover { background: var(--brand); border-color: transparent; transform: rotate(90deg); }
+body.modal-open { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

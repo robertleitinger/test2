@@ -9,5 +9,9 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  redirects: {
+    // Webdesign-Detailseite ist in /leistungen/ aufgegangen – alte URL erhalten.
+    '/leistungen/webdesign/': '/leistungen/',
+  },
   integrations: [sitemap()],
 });

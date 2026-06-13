@@ -2,153 +2,59 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import { site } from '../data/site';
-
-const mapsUrl =
-  'https://www.google.com/maps/search/?api=1&query=Kornsteinplatz+10+5400+Hallein';
-const betreffOptionen = [
-  'Erstellen einer Webseite',
-  'Redesign einer Webseite',
-  'Erstellen eines Onlineshops',
-  'SEO Dienstleistungen',
-  'Consulting / Sonstiges',
-];
 ---
 
 <BaseLayout
   title="Kontakt » CodeRocker"
-  description="Kontaktieren Sie CodeRocker in Hallein bei Salzburg. Erzählen Sie uns von Ihrem Projekt – das Erstgespräch ist kostenlos und unverbindlich."
+  description="Starten Sie Ihre Projektanfrage bei CodeRocker. Erzählen Sie uns von Ihrem Webseiten-Projekt – das Erstgespräch ist kostenlos und unverbindlich."
   path="/kontakt/"
 >
   <PageHero
     eyebrow="// kontakt"
-    title='Erzählen Sie uns von Ihrem <span class="grad-text">Projekt</span>'
-    lead="Das Erstgespräch ist kostenlos und unverbindlich. Schreiben Sie uns über das Formular oder direkt per E-Mail – wir melden uns zeitnah bei Ihnen."
-  />
+    title='Lassen Sie uns über Ihr <span class="grad-text">Projekt</span> sprechen'
+    lead="Am einfachsten erreichen Sie uns über das Anfrageformular. Beschreiben Sie kurz Ihr Vorhaben – wir melden uns zeitnah mit den nächsten Schritten. Kostenlos und unverbindlich."
+  >
+    <div class="hero-actions">
+      <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projektanfrage starten <span class="arrow">→</span></button>
+    </div>
+  </PageHero>
 
-  <section class="section">
+  <section class="section section--center">
     <div class="container contact-grid">
-      <!-- FORMULAR -->
-      <div class="form-wrap" data-reveal>
-        <p class="eyebrow">// direktanfrage</p>
-        <h2>Ihre Projektanfrage</h2>
-        <p>Beim Absenden öffnet sich Ihr E-Mail-Programm mit der fertigen Nachricht an uns.</p>
-
-        <form id="contact-form" novalidate>
-          <div class="field">
-            <label for="name">Ihr Name</label>
-            <input type="text" id="name" name="name" autocomplete="name" required />
-          </div>
-          <div class="field">
-            <label for="email">Ihre E-Mail</label>
-            <input type="email" id="email" name="email" autocomplete="email" required />
-          </div>
-          <div class="field">
-            <label for="betreff">Was benötigen Sie?</label>
-            <select id="betreff" name="betreff" required>
-              <option value="" disabled selected>Bitte wählen …</option>
-              {betreffOptionen.map((o) => <option value={o}>{o}</option>)}
-            </select>
-          </div>
-          <div class="field">
-            <label for="nachricht">Erzählen Sie uns von Ihrem Projekt</label>
-            <textarea id="nachricht" name="nachricht" rows="6" required></textarea>
-          </div>
-          <label class="consent">
-            <input type="checkbox" id="consent" required />
-            <span>Mit dem Absenden stimmen Sie der Verarbeitung der eingegebenen Daten zu. Mehr Informationen: <a href="/datenschutz/">Datenschutzerklärung</a>.</span>
-          </label>
-          <button type="submit" class="btn btn--grad">Anfrage senden <span class="arrow">→</span></button>
-          <p class="form-hint" id="form-hint" role="status"></p>
-        </form>
+      <div class="contact-cta card" data-reveal data-tilt>
+        <p class="eyebrow">// schnellster weg</p>
+        <h2>Projektanfrage</h2>
+        <p>Erzählen Sie uns in wenigen Minuten von Ihrem Projekt – ganz bequem über unser Formular.</p>
+        <button type="button" class="btn btn--grad" data-open-form data-magnetic>Jetzt Anfrage starten <span class="arrow">→</span></button>
       </div>
 
-      <!-- OFFICE -->
-      <aside class="office-card" data-reveal>
-        <p class="eyebrow">// office</p>
-        <h2>So erreichen Sie uns</h2>
-        <address>
-          <strong>{site.name}</strong><br />
-          {site.owner}<br />
-          {site.street}<br />
-          {site.postalCode} {site.city}, {site.country}
-        </address>
-        <ul class="contact-list">
-          <li><span>Telefon</span><a href={site.phoneHref}>{site.phone}</a></li>
-          <li><span>E-Mail</span><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><span>Zeiten</span>{site.hours}</li>
-        </ul>
-        <p class="note">Bitte um telefonische Voranmeldung.</p>
-        <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn--ghost map-btn">
-          In Google Maps öffnen <span class="arrow">→</span>
-        </a>
-      </aside>
+      <div class="contact-info" data-reveal>
+        <p class="eyebrow">// erreichbarkeit</p>
+        <h2>Direkt &amp; remote</h2>
+        <p>
+          Sie haben eine kurze Frage? Schreiben Sie uns:
+        </p>
+        <p><a class="contact-mail" href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p class="contact-region">
+          Wir arbeiten in der gesamten DACH-Region – vor Ort vor allem rund um Salzburg und Bayern,
+          sonst per Video-Call, Telefon und E-Mail. Büro­besuche nur nach Vereinbarung.
+        </p>
+        <p class="contact-impressum">Vollständige Anbieterdaten finden Sie im <a href="/impressum/">Impressum</a>.</p>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .contact-grid { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-  .form-wrap h2 { margin-bottom: 0.5rem; }
-
-  form { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem; }
-  .field { display: flex; flex-direction: column; gap: 0.4rem; }
-  label { font-family: var(--font-display); font-weight: 500; font-size: 0.95rem; color: var(--ink); }
-  input, select, textarea {
-    font-family: var(--font-body); font-size: 1rem; color: var(--ink-2);
-    padding: 0.8rem 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.04); transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  input:focus, select:focus, textarea:focus {
-    outline: none; border-color: var(--brand);
-    box-shadow: 0 0 0 3px rgba(95, 52, 240, 0.15);
-  }
-  textarea { resize: vertical; }
-  .consent { flex-direction: row; align-items: flex-start; gap: 0.6rem; font-weight: 400; font-family: var(--font-body); font-size: 0.9rem; color: var(--ink-2); }
-  .consent input { width: 1.1rem; height: 1.1rem; margin-top: 0.2rem; flex: none; }
-  .form-hint { font-size: 0.9rem; color: var(--ink-faint); margin: 0; min-height: 1.2em; }
-  .form-hint.error { color: #c02626; }
-
-  .office-card {
-    background: var(--paper-tint); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 2rem;
-  }
-  .office-card h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-  address { font-style: normal; line-height: 1.7; margin-bottom: 1.25rem; }
-  .contact-list { list-style: none; margin: 0 0 1rem; padding: 0; }
-  .contact-list li { display: flex; gap: 1rem; padding: 0.55rem 0; border-top: 1px solid var(--line); }
-  .contact-list span { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); width: 4.5rem; flex: none; }
-  .note { font-size: 0.9rem; color: var(--ink-faint); }
-  .map-btn { margin-top: 0.5rem; }
-
-  @media (max-width: 820px) { .contact-grid { grid-template-columns: 1fr; } }
+  .hero-actions { margin-top: 2rem; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: stretch; text-align: left; max-width: 980px; margin-inline: auto; }
+  .contact-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .contact-cta h2, .contact-info h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.5rem; }
+  .contact-cta p { color: var(--ink-soft); margin-bottom: 1.5rem; }
+  .contact-cta .btn { margin-top: auto; }
+  .contact-info { padding: 1.85rem 0; }
+  .contact-mail { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+  .contact-region { color: var(--ink-soft); margin-top: 1rem; }
+  .contact-impressum { color: var(--ink-faint); font-size: 0.9rem; margin-top: 1.25rem; }
+  @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
 </style>
-
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const hint = document.getElementById('form-hint');
-  const EMAIL = 'service@coderocker.at';
-
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    const data = new FormData(form);
-    const name = String(data.get('name') ?? '');
-    const email = String(data.get('email') ?? '');
-    const betreff = String(data.get('betreff') ?? '');
-    const nachricht = String(data.get('nachricht') ?? '');
-
-    const subject = `Projektanfrage: ${betreff}`;
-    const body =
-      `Name: ${name}\n` +
-      `E-Mail: ${email}\n` +
-      `Anliegen: ${betreff}\n\n` +
-      `Nachricht:\n${nachricht}\n`;
-
-    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    if (hint) hint.textContent = 'Ihr E-Mail-Programm wird geöffnet …';
-    window.location.href = mailto;
-  });
-</script>

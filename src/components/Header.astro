@@ -15,7 +15,7 @@ const isActive = (href: string) =>
 <header class="site-header" class:list={[{ 'is-dark': heroDark }]} data-header>
   <div class="container header-inner">
     <a href="/" class="brand" aria-label={`${site.name} – Startseite`}>
-      <Image src={logoWhite} alt={`${site.name} Logo`} width={150} height={34} class="brand-logo" />
+      <Image src={logoWhite} alt={`${site.name} Logo`} width={360} height={77} densities={[1, 2]} class="brand-logo" />
     </a>
 
     <nav class="nav" aria-label="Hauptnavigation">
@@ -40,7 +40,7 @@ const isActive = (href: string) =>
       </ul>
     </nav>
 
-    <a href="/kontakt/" class="btn btn--grad header-cta">Projekt starten</a>
+    <a href="/kontakt/" class="btn btn--grad header-cta" data-open-form>Projekt starten</a>
 
     <button class="burger" aria-label="Menü öffnen" aria-expanded="false" data-burger>
       <span></span><span></span><span></span>
@@ -60,25 +60,18 @@ const isActive = (href: string) =>
           )}
         </li>
       ))}
-      <li><a class="btn btn--grad" href="/kontakt/">Projekt starten</a></li>
+      <li><a class="btn btn--grad" href="/kontakt/" data-open-form>Projekt starten</a></li>
     </ul>
   </div>
 </header>
 
 <style>
   .site-header {
-    position: sticky;
-    top: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(8, 6, 26, 0.55);
-    backdrop-filter: blur(14px);
+    background: transparent;
     border-bottom: 1px solid var(--line);
-    transition: background 0.25s ease, border-color 0.25s ease;
-  }
-  /* Beim Scrollen etwas solider */
-  .site-header.scrolled {
-    background: rgba(8, 6, 26, 0.82);
-    border-bottom-color: var(--line-strong);
   }
 
   .header-inner {
@@ -190,22 +183,18 @@ const isActive = (href: string) =>
 </style>
 
 <script>
-  const header = document.querySelector('[data-header]');
-  const burger = document.querySelector('[data-burger]');
-  const panel = document.querySelector('[data-mobile]') as HTMLElement | null;
-
-  burger?.addEventListener('click', () => {
-    const open = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!open));
-    burger.setAttribute('aria-label', open ? 'Menü öffnen' : 'Menü schließen');
-    if (panel) panel.hidden = open;
-  });
-
-  // Header wird beim Scrollen solide
-  const onScroll = () => {
-    if (window.scrollY > 24) header?.classList.add('scrolled');
-    else header?.classList.remove('scrolled');
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  function initHeader() {
+    const burger = document.querySelector('[data-burger]');
+    const panel = document.querySelector('[data-mobile]') as HTMLElement | null;
+    if (!burger || (burger as any).__init) return;
+    (burger as any).__init = true;
+    burger.addEventListener('click', () => {
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      burger.setAttribute('aria-label', open ? 'Menü öffnen' : 'Menü schließen');
+      if (panel) panel.hidden = open;
+    });
+  }
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
 </script>

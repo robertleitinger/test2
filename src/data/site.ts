@@ -25,16 +25,7 @@ export type NavItem = {
 };
 
 export const nav: NavItem[] = [
-  {
-    label: 'Leistungen',
-    href: '/leistungen/',
-    children: [
-      { label: 'Webdesign', href: '/leistungen/webdesign/' },
-      { label: 'SEO', href: '/leistungen/seo/' },
-      { label: 'WordPress Agentur', href: '/leistungen/wordpress-agentur/' },
-      { label: 'SEO Consulting', href: '/leistungen/seo-consultant/' },
-    ],
-  },
+  { label: 'Leistungen', href: '/leistungen/' },
   { label: 'Referenzen', href: '/referenzen/' },
   { label: 'Über uns', href: '/ueber-uns/' },
   { label: 'Kontakt', href: '/kontakt/' },
@@ -48,15 +39,11 @@ export const footerLinks = {
     { label: 'Über uns', href: '/ueber-uns/' },
     { label: 'Kontakt', href: '/kontakt/' },
   ],
-  // Lokale Landingpages folgen in einer späteren Phase – derzeit als Text dargestellt.
-  schwerpunkte: [
-    'Webdesign Salzburg',
-    'Webdesign Hallein',
-    'Webdesign Pongau',
-    'Webdesign Pinzgau',
-    'Webdesign Klagenfurt',
-    'Webdesign Chiemgau',
-    'SEO Salzburg',
+  // De-fokussierte Leistungen – nur noch über den Footer erreichbar.
+  weitere: [
+    { label: 'Suchmaschinenoptimierung', href: '/leistungen/seo/' },
+    { label: 'WordPress Agentur', href: '/leistungen/wordpress-agentur/' },
+    { label: 'SEO Consulting', href: '/leistungen/seo-consultant/' },
   ],
   information: [
     { label: 'AGB', href: '/agb/' },
