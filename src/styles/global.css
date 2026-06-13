@@ -18,9 +18,10 @@
 
 :root {
   /* Marke */
-  --brand: #6d44f7;          /* etwas heller für Kontrast auf Dunkel */
-  --brand-strong: #5f34f0;   /* abgestimmter Markenakzent */
-  --magenta: #b45cff;        /* Gradient-Partner */
+  --accent: #5333ED;         /* Akzentfarbe der Marke */
+  --brand: #5333ED;          /* = Akzent */
+  --brand-strong: #4526d4;   /* dunklerer Akzent – Start des Verlaufs */
+  --magenta: #7b5cff;        /* hellerer Akzent-Partner (weniger grell als zuvor) */
   --cyan: #4be3d8;           /* seltener kühler Spark */
   --gold: #ffc320;           /* sehr sparsam: Sterne */
 
@@ -41,9 +42,9 @@
   --line: rgba(255, 255, 255, 0.10);
   --line-strong: rgba(255, 255, 255, 0.18);
 
-  /* Signatur-Gradient */
-  --grad: linear-gradient(120deg, var(--brand-strong) 0%, var(--magenta) 100%);
-  --grad-soft: linear-gradient(120deg, #7a52ff 0%, #c06bff 100%);
+  /* Signatur-Gradient – akzentbasiert, tiefer & weniger hell */
+  --grad: linear-gradient(135deg, #3a1faf 0%, #5333ED 55%, #6f4dff 100%);
+  --grad-soft: linear-gradient(135deg, #5333ED 0%, #7b5cff 100%);
 
   /* Typo */
   --font-display: 'Sora', system-ui, sans-serif;
@@ -56,8 +57,8 @@
   --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.7);
-  --shadow-brand: 0 28px 70px -22px rgba(124, 70, 255, 0.55);
-  --glow: 0 0 40px -8px rgba(124, 70, 255, 0.45);
+  --shadow-brand: 0 28px 70px -22px rgba(83, 51, 237, 0.55);
+  --glow: 0 0 40px -8px rgba(83, 51, 237, 0.5);
 }
 
 *,
@@ -99,7 +100,7 @@ a:hover { text-decoration: underline; }
 img { max-width: 100%; height: auto; display: block; }
 ul { margin: 0 0 1.1em; padding-left: 1.2em; }
 li { margin-bottom: 0.4em; }
-::selection { background: rgba(124, 70, 255, 0.4); color: #fff; }
+::selection { background: rgba(83, 51, 237, 0.45); color: #fff; }
 
 /* ---------- Layout-Helfer ---------- */
 .container {
@@ -133,8 +134,8 @@ li { margin-bottom: 0.4em; }
   inset: -40% -10% auto -10%;
   height: 110%;
   background:
-    radial-gradient(55% 60% at 25% 15%, rgba(109, 68, 247, 0.5), transparent 70%),
-    radial-gradient(45% 55% at 88% 8%, rgba(180, 92, 255, 0.38), transparent 70%);
+    radial-gradient(55% 60% at 25% 15%, rgba(83, 51, 237, 0.5), transparent 70%),
+    radial-gradient(45% 55% at 88% 8%, rgba(111, 77, 255, 0.32), transparent 70%);
   pointer-events: none;
   z-index: 0;
   filter: blur(10px);
@@ -151,22 +152,31 @@ li { margin-bottom: 0.4em; }
 .section-head { max-width: 64ch; margin-bottom: 3rem; }
 .section--center .section-head { margin-inline: auto; text-align: center; }
 
-/* ---------- Eyebrow (Code-Kommentar) ---------- */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: #c4abff;
+/* ---------- Kicker (editoriale Anmerkung über Überschriften) ----------
+   Kein Badge – nur typografischer Kontrast (Mono, gesperrt) mit einem
+   langen Akzent-Strich davor. */
+.kicker {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 1.1rem;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(124, 70, 255, 0.08);
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
+.kicker::before {
+  content: '';
+  flex: none;
+  width: 2.6rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), #7b5cff);
+}
+.section--center .kicker,
+.section--center .section-head .kicker { justify-content: center; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -251,7 +261,7 @@ li { margin-bottom: 0.4em; }
 
 /* Gradient-Text-Akzent */
 .grad-text {
-  background: linear-gradient(120deg, #8a63ff 0%, #c06bff 60%, #ff8fd6 100%);
+  background: linear-gradient(120deg, #8b73ff 0%, #6f4dff 55%, #5333ED 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -339,10 +349,10 @@ li { margin-bottom: 0.4em; }
   z-index: -4;
   pointer-events: none;
   background:
-    radial-gradient(38vmax 30vmax at 12% 8%, rgba(109, 68, 247, 0.30), transparent 60%),
-    radial-gradient(34vmax 30vmax at 88% 4%, rgba(180, 92, 255, 0.24), transparent 60%),
+    radial-gradient(38vmax 30vmax at 12% 8%, rgba(83, 51, 237, 0.30), transparent 60%),
+    radial-gradient(34vmax 30vmax at 88% 4%, rgba(111, 77, 255, 0.22), transparent 60%),
     radial-gradient(30vmax 26vmax at 70% 90%, rgba(75, 227, 216, 0.10), transparent 60%),
-    radial-gradient(28vmax 24vmax at 20% 80%, rgba(124, 70, 255, 0.16), transparent 60%);
+    radial-gradient(28vmax 24vmax at 20% 80%, rgba(83, 51, 237, 0.16), transparent 60%);
   filter: blur(20px);
   animation: auroraDrift 26s ease-in-out infinite alternate;
 }
@@ -375,8 +385,8 @@ li { margin-bottom: 0.4em; }
   display: block;
   height: 100%;
   width: var(--p, 0%);
-  background: linear-gradient(90deg, var(--brand-strong), var(--magenta), #ff8fd6);
-  box-shadow: 0 0 12px rgba(124, 70, 255, 0.7);
+  background: linear-gradient(90deg, var(--brand-strong), var(--accent), var(--magenta));
+  box-shadow: 0 0 12px rgba(83, 51, 237, 0.7);
 }
 
 /* 3D-Tilt */
@@ -395,7 +405,7 @@ li { margin-bottom: 0.4em; }
 
 /* Gradient-Shimmer für Akzenttext */
 .shimmer {
-  background: linear-gradient(100deg, #8a63ff 0%, #c06bff 35%, #ffffff 50%, #c06bff 65%, #8a63ff 100%);
+  background: linear-gradient(100deg, #6f4dff 0%, #9b7cff 35%, #ffffff 50%, #9b7cff 65%, #6f4dff 100%);
   background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -453,8 +463,8 @@ li { margin-bottom: 0.4em; }
 .form-modal__backdrop {
   position: absolute; inset: 0;
   background:
-    radial-gradient(70% 60% at 50% 28%, rgba(124, 70, 255, 0.22), transparent 70%),
-    radial-gradient(50% 50% at 85% 90%, rgba(180, 92, 255, 0.16), transparent 70%),
+    radial-gradient(70% 60% at 50% 28%, rgba(83, 51, 237, 0.22), transparent 70%),
+    radial-gradient(50% 50% at 85% 90%, rgba(111, 77, 255, 0.16), transparent 70%),
     #000;
 }
 .form-modal__panel {
@@ -470,7 +480,7 @@ li { margin-bottom: 0.4em; }
   background: var(--grad);
 }
 .form-modal__inner { width: 100%; max-width: 760px; text-align: center; }
-.form-modal__inner .eyebrow { margin-inline: auto; }
+.form-modal__inner .kicker { justify-content: center; }
 .form-modal__inner h2 { font-size: clamp(2rem, 5vw, 3.25rem); }
 .form-modal__inner p { color: var(--ink-soft); max-width: 52ch; margin-inline: auto; }
 .form-modal__embed {

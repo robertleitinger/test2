@@ -48,7 +48,7 @@ const weitere = [
   path="/leistungen/"
 >
   <PageHero
-    eyebrow="// leistungen"
+    eyebrow="leistungen"
     title='Optimierte Webseiten, die Besucher zu <span class="grad-text">Kunden</span> machen'
     lead="Ob komplett neu oder als Redesign Ihrer bestehenden Seite: Wir bauen Webseiten, die modern aussehen, schnell laden und mehr Anfragen bringen. Nach einem kostenlosen Erstgespräch erhalten Sie ein individuelles Festpreis-Angebot."
   >
@@ -61,6 +61,7 @@ const weitere = [
   <section class="section">
     <div class="container">
       <div class="section-head">
+        <p class="kicker">ablauf</p>
         <h2>In 4 Schritten zu Ihrer neuen Webseite</h2>
         <p class="lead">Transparent von der ersten Idee bis zum Go-live – Sie wissen immer, woran wir gerade arbeiten.</p>
       </div>
@@ -81,10 +82,12 @@ const weitere = [
     <div class="container">
       <div class="grid grid--2 features">
         <div data-reveal="left">
+          <p class="kicker">inklusive</p>
           <h2>Immer dabei</h2>
           <ul class="check-list">{included.map((f) => <li>{f}</li>)}</ul>
         </div>
         <div data-reveal="right">
+          <p class="kicker">optional</p>
           <h2>Auf Wunsch</h2>
           <ul class="check-list check-list--plus">{optional.map((f) => <li>{f}</li>)}</ul>
         </div>
@@ -97,6 +100,7 @@ const weitere = [
   <section class="section">
     <div class="container">
       <div class="section-head section--center">
+        <p class="kicker">preise</p>
         <h2>Was kostet eine Website?</h2>
         <p class="lead">Jedes Projekt ist individuell – diese Pakete geben Orientierung. Den finalen Festpreis legen wir nach dem Erstgespräch fest.</p>
       </div>
@@ -123,6 +127,7 @@ const weitere = [
   <section class="section section--tint section--center">
     <div class="container">
       <div class="section-head">
+        <p class="kicker">weitere leistungen</p>
         <h2>Brauchen Sie mehr?</h2>
         <p class="lead">Neben der Webseiten-Erstellung unterstützen wir Sie auch in diesen Bereichen.</p>
       </div>
@@ -155,7 +160,7 @@ const weitere = [
 
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
   .step { background: var(--surface-glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; backdrop-filter: blur(10px); }
-  .step-num { font-family: var(--font-mono); font-size: 1rem; font-weight: 500; color: #c4abff; }
+  .step-num { font-family: var(--font-mono); font-size: 1rem; font-weight: 500; color: #9b86ff; }
   .step h3 { margin: 0.75rem 0 0.5rem; font-size: 1.2rem; }
   .step p { font-size: 0.95rem; margin: 0; }
 
@@ -184,7 +189,7 @@ const weitere = [
   .weitere-card:hover { text-decoration: none; }
   .weitere-card h3 { margin-bottom: 0.4rem; }
   .weitere-card p { font-size: 0.95rem; flex: 1; }
-  .card-link { font-family: var(--font-display); font-weight: 600; color: #c4abff; }
+  .card-link { font-family: var(--font-display); font-weight: 600; color: #9b86ff; }
 
   @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }

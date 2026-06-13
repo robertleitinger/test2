@@ -53,11 +53,11 @@ const refs = [
           <span class="reveal-word" style="animation-delay:.05s">Webdesign</span>
           <span class="reveal-word" style="animation-delay:.12s">und</span>
           <span class="reveal-word" style="animation-delay:.19s">Online</span>
-          <span class="reveal-word" style="animation-delay:.26s">Marketing</span>
         </span>
         <span class="line">
-          <span class="reveal-word" style="animation-delay:.36s">das</span>
-          <span class="reveal-word shimmer" style="animation-delay:.46s">rockt!</span>
+          <span class="reveal-word" style="animation-delay:.28s">Marketing</span>
+          <span class="reveal-word" style="animation-delay:.35s">das</span>
+          <span class="reveal-word shimmer" style="animation-delay:.42s">rockt!</span>
         </span>
       </h1>
       <p class="lead hero-lead">Erreichen Sie mehr Kunden und steigern Sie Ihren Umsatz!</p>
@@ -106,6 +106,7 @@ const refs = [
   <section class="section">
     <div class="container split">
       <div data-reveal="left">
+        <p class="kicker">das machen wir</p>
         <h2>Wir bauen Webseiten,<br />die <span class="grad-text">verkaufen</span>.</h2>
         <p class="lead">
           Ob komplett neu oder als Redesign Ihrer bestehenden Seite: Wir erstellen
@@ -129,6 +130,7 @@ const refs = [
   <section class="section section--tint section--center">
     <div class="container">
       <div class="section-head">
+        <p class="kicker">warum coderocker</p>
         <h2>Mehr als nur schön</h2>
         <p class="lead">Eine gute Webseite ist eine Investition mit Rendite. Darauf bauen wir.</p>
       </div>
@@ -148,6 +150,7 @@ const refs = [
     <div class="container">
       <div class="section-head split-head">
         <div>
+          <p class="kicker">referenzen</p>
           <h2>Ausgewählte Projekte</h2>
         </div>
         <a href="/referenzen/" class="btn btn--ghost" data-magnetic>Alle Referenzen <span class="arrow">→</span></a>
@@ -191,21 +194,22 @@ const refs = [
   .hero.section--ink { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .hero.section--ink::before { display: none; }
   .hero .container { position: relative; z-index: 2; }
-  .hero-inner { max-width: 70rem; }
+  .hero-inner { max-width: var(--maxw); }
   .hero-title {
-    margin-bottom: 1.4rem;
-    font-size: clamp(2.2rem, 4.7vw, 3.6rem);
-    line-height: 1.04; letter-spacing: -0.03em; font-weight: 800;
-    text-shadow: 0 8px 60px rgba(124, 70, 255, 0.4);
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.6rem, 7.75vw, 5.85rem);
+    line-height: 1.02; letter-spacing: -0.035em; font-weight: 800;
+    text-shadow: 0 8px 60px rgba(83, 51, 237, 0.4);
   }
   .hero-title .line { display: block; overflow: hidden; }
-  .hero-title .reveal-word { margin-right: 0.24em; }
+  .hero-title .reveal-word { margin-right: 0.2em; }
+  .hero-title .line .reveal-word:last-child { margin-right: 0; }
   .hero-lead {
     color: #fff; font-weight: 500; margin-bottom: 2rem;
-    font-size: clamp(1.45rem, 2.5vw, 2rem);
-    line-height: 1.4; max-width: 58rem;
+    font-size: clamp(1.5rem, 2.9vw, 2.3rem);
+    line-height: 1.4; max-width: 68rem;
   }
-  /* Slogan am Desktop garantiert auf 2 Zeilen halten */
+  /* Slogan am Desktop garantiert auf 2 ausgefüllte Zeilen halten */
   @media (min-width: 821px) {
     .hero-title .line { white-space: nowrap; }
   }
