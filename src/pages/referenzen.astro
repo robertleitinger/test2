@@ -40,7 +40,7 @@ const projekte = [
       <div class="ref-grid">
         {projekte.map((p) => (
           <figure class="ref-card" data-reveal data-tilt>
-            <div class="ref-img">
+            <div class="ref-media">
               <Image src={p.img} alt={p.name} width={900} height={563} quality={84} />
             </div>
             <figcaption>
@@ -63,24 +63,37 @@ const projekte = [
 </BaseLayout>
 
 <style>
-  .ref-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .ref-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.25rem; }
   .ref-card {
-    position: relative; margin: 0; overflow: hidden;
-    border-radius: var(--radius); border: 1px solid var(--line);
-    aspect-ratio: 16 / 10; background: var(--paper-tint);
-    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    margin: 0; display: flex; flex-direction: column;
+    background: linear-gradient(155deg, #242029 0%, #19161f 52%, #241c18 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 2.6vw, 2.5rem);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
-  .ref-img { position: absolute; inset: 0; }
-  .ref-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-  .ref-card::after {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.30) 42%, transparent 68%);
+  .ref-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--line-strong);
+    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.85), var(--glow);
   }
-  .ref-card figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 1.6rem 1.7rem; }
-  .ref-card h3 { margin: 0 0 0.25rem; font-size: clamp(1.25rem, 2.2vw, 1.55rem); }
-  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: #cdbbff; margin: 0; }
-  .ref-card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: var(--shadow), var(--glow); }
-  .ref-card:hover .ref-img :global(img) { transform: scale(1.06); }
+  /* Mockup großzügig gepolstert eingerahmt */
+  .ref-media {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: var(--paper-tint);
+    box-shadow: 0 28px 55px -24px rgba(0, 0, 0, 0.9);
+  }
+  .ref-media :global(img) {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    transition: transform 0.6s ease;
+  }
+  .ref-card:hover .ref-media :global(img) { transform: scale(1.04); }
+  .ref-card figcaption { padding-top: 1.5rem; }
+  .ref-card h3 { margin: 0 0 0.3rem; font-size: clamp(1.2rem, 2vw, 1.45rem); }
+  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: #b3a4e0; margin: 0; }
 
   .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
   .cta-band h2 { margin-bottom: 0.75rem; }

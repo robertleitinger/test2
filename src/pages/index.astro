@@ -80,8 +80,8 @@ const refs = [
         </p>
         <ul class="check-list">
           <li>Maßgeschneidertes Webdesign &amp; Redesign – kein Baukasten</li>
-          <li>Perfekt auf Smartphone, Tablet &amp; Desktop</li>
-          <li>Technisch perfekt – top lesbar für Google &amp; KI-Chatbots</li>
+          <li>Gestochen scharf auf Smartphone, Tablet &amp; Desktop</li>
+          <li>Schnelle Ladezeit – optimiert für Google und KI-Systeme</li>
         </ul>
         <a href="/leistungen/" class="btn btn--grad" data-magnetic>Unsere Leistungen <span class="arrow">→</span></a>
       </div>
@@ -111,7 +111,7 @@ const refs = [
       <div class="grid grid--3">
         {refs.map((r) => (
           <figure class="ref-card" data-reveal data-tilt>
-            <div class="ref-img"><Image src={r.img} alt={r.name} width={760} height={532} quality={82} /></div>
+            <div class="ref-media"><Image src={r.img} alt={r.name} width={760} height={532} quality={82} /></div>
             <figcaption><h3>{r.name}</h3><p class="ref-tag">{r.tag}</p></figcaption>
           </figure>
         ))}
@@ -167,10 +167,10 @@ const refs = [
     .hero-title .line { white-space: nowrap; }
   }
   .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
-  .hero-rating { display: flex; align-items: center; gap: 0.9rem 1.1rem; flex-wrap: wrap; }
-  .hero-rating .stars { font-size: 1.7rem; line-height: 1; color: var(--gold); letter-spacing: 2px; }
-  .hero-rating .rating-value { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; color: #fff; }
-  .hero-rating .rating-label { font-size: 1.05rem; color: var(--ink-soft); }
+  .hero-rating { display: flex; align-items: center; gap: 0.6rem 0.9rem; flex-wrap: wrap; }
+  .hero-rating .stars { font-size: 1.3rem; line-height: 1; color: var(--gold); letter-spacing: 1.5px; }
+  .hero-rating .rating-value { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; }
+  .hero-rating .rating-label { font-size: 0.95rem; color: var(--ink-soft); }
   .hero-scroll {
     position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
     z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -191,16 +191,17 @@ const refs = [
 
   /* VORTEILE */
 
-  /* REFERENZEN-TEASER */
+  /* REFERENZEN-TEASER (Premium-Box mit gepolstertem Mockup) */
+  .ref-card { margin: 0; display: flex; flex-direction: column; background: linear-gradient(155deg, #242029 0%, #19161f 52%, #241c18 100%); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+  .ref-card:hover { transform: translateY(-6px); box-shadow: 0 40px 80px -40px rgba(0,0,0,0.85), var(--glow); border-color: var(--line-strong); }
+  .ref-media { border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; background: var(--paper-tint); box-shadow: 0 22px 45px -22px rgba(0,0,0,0.9); }
+  .ref-media :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.55s ease; }
+  .ref-card:hover .ref-media :global(img) { transform: scale(1.04); }
+  .ref-card figcaption { padding-top: 1.2rem; }
+  .ref-card h3 { font-size: 1.15rem; margin: 0 0 0.25rem; }
+  .ref-tag { font-family: var(--font-mono); font-size: 0.78rem; color: #b3a4e0; margin: 0; }
+
   .split-head { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; max-width: none; }
-  .ref-card { margin: 0; background: var(--surface-glass); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
-  .ref-card:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--glow); border-color: var(--line-strong); }
-  .ref-img { overflow: hidden; aspect-ratio: 760 / 532; }
-  .ref-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-  .ref-card:hover .ref-img :global(img) { transform: scale(1.05); }
-  .ref-card figcaption { padding: 1.1rem 1.3rem 1.4rem; }
-  .ref-card h3 { font-size: 1.15rem; margin: 0 0 0.2rem; }
-  .ref-tag { font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-faint); margin: 0; }
 
   /* TESTIMONIAL */
   .testimonial { max-width: 48rem; margin-inline: auto; text-align: center; }
