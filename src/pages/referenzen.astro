@@ -49,7 +49,7 @@ const projekte = [
         {projekte.map((p) => (
           <figure class="ref-card" data-reveal>
             <div class="ref-img">
-              <Image src={p.img} alt={p.name} width={500} height={350} />
+              <Image src={p.img} alt={p.name} width={760} height={532} quality={82} />
             </div>
             <figcaption>
               <h3>{p.name}</h3>
@@ -73,7 +73,7 @@ const projekte = [
 <style>
   .ref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   .ref-card {
-    margin: 0; background: #fff; border: 1px solid var(--line);
+    margin: 0; background: var(--surface-glass); border: 1px solid var(--line);
     border-radius: var(--radius); overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
@@ -83,7 +83,7 @@ const projekte = [
   .ref-card:hover .ref-img :global(img) { transform: scale(1.05); }
   .ref-card figcaption { padding: 1.25rem 1.4rem 1.5rem; }
   .ref-card h3 { font-size: 1.2rem; margin: 0 0 0.2rem; }
-  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; color: #6a6690; margin: 0; }
+  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); margin: 0; }
   .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
   .cta-band h2 { margin-bottom: 0.75rem; }
 

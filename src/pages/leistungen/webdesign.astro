@@ -117,7 +117,7 @@ const packages = [
         ))}
       </div>
       <figure class="kosten-figure" data-reveal>
-        <Image src={kostenImg} alt="Was kostet eine Website?" width={1000} height={563} />
+        <Image src={kostenImg} alt="Was kostet eine Website?" width={1200} height={675} quality={85} />
       </figure>
     </div>
   </section>
@@ -137,7 +137,7 @@ const packages = [
   .cta-band h2 { margin-bottom: 0.75rem; }
 
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-  .step { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; }
+  .step { background: var(--surface-glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; backdrop-filter: blur(6px); }
   .step-num { font-family: var(--font-mono); font-size: 1rem; font-weight: 500; color: var(--brand); }
   .step h3 { margin: 0.75rem 0 0.5rem; font-size: 1.2rem; }
   .step p { font-size: 0.95rem; margin: 0; }
@@ -154,8 +154,9 @@ const packages = [
 
   .price-grid { align-items: stretch; }
   .price-card {
-    position: relative; background: #fff; border: 1px solid var(--line);
+    position: relative; background: var(--surface-glass); border: 1px solid var(--line);
     border-radius: var(--radius); padding: 2rem 1.75rem; display: flex; flex-direction: column;
+    backdrop-filter: blur(6px);
   }
   .price-card.featured { border-color: var(--brand); box-shadow: var(--shadow-brand); }
   .badge {
@@ -164,7 +165,7 @@ const packages = [
     font-size: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 999px;
   }
   .price { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--ink); margin: 0.5rem 0 0.25rem; }
-  .price-pages { font-size: 0.85rem; color: #6a6690; margin: 0 0 1rem; font-family: var(--font-mono); }
+  .price-pages { font-size: 0.85rem; color: var(--ink-faint); margin: 0 0 1rem; font-family: var(--font-mono); }
   .price-desc { font-size: 0.95rem; }
   .price-card .check-list { flex: 1; margin-bottom: 1.5rem; }
   .price-card .check-list li { font-size: 0.93rem; }

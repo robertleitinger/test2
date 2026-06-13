@@ -127,7 +127,7 @@ const faqs = [
         {services.map((s) => (
           <a href={s.href} class="card service-card" data-reveal>
             <div class="service-img">
-              <Image src={s.img} alt={s.title} width={420} height={280} />
+              <Image src={s.img} alt={s.title} width={760} height={507} quality={86} />
             </div>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
@@ -168,7 +168,7 @@ const faqs = [
   <section class="section section--ink">
     <div class="container founder">
       <div class="founder-photo" data-reveal>
-        <Image src={robert} alt={`${site.owner}, Inhaber von CodeRocker`} width={460} height={553} />
+        <Image src={robert} alt={`${site.owner}, Inhaber von CodeRocker`} width={620} height={745} quality={88} />
       </div>
       <div class="founder-text" data-reveal>
         <p class="eyebrow">// inhaber &amp; seo-consultant</p>
@@ -241,28 +241,29 @@ const faqs = [
 
   /* LOGOS */
   .logos-section { padding-block: clamp(2.5rem, 5vw, 3.5rem); }
-  .logos-label { text-align: center; font-size: 0.85rem; letter-spacing: 0.04em; color: #8d88b3; margin-bottom: 1.75rem; }
+  .logos-label { text-align: center; font-size: 0.82rem; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 1.75rem; font-family: var(--font-mono); }
   .logos-strip {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
     gap: clamp(1.5rem, 5vw, 3.5rem);
   }
   .client-logo {
-    height: 46px; width: auto;
-    filter: grayscale(1); opacity: 0.55;
-    transition: filter 0.2s ease, opacity 0.2s ease;
+    height: 42px; width: auto;
+    filter: brightness(0) invert(1); opacity: 0.5;
+    transition: opacity 0.2s ease;
   }
-  .client-logo:hover { filter: none; opacity: 1; }
+  .client-logo:hover { opacity: 0.95; }
 
   /* SERVICES */
-  .service-card { display: flex; flex-direction: column; color: var(--ink-2); text-decoration: none; }
+  .service-card { display: flex; flex-direction: column; color: var(--ink-2); text-decoration: none; padding: 1.25rem; }
   .service-card:hover { text-decoration: none; }
   .service-img { border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 1.25rem; }
   .service-img :global(img) { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
   .service-card:hover .service-img :global(img) { transform: scale(1.04); }
   .service-card h3 { margin-bottom: 0.5rem; }
   .service-card p { font-size: 0.98rem; flex: 1; }
-  .card-link { font-family: var(--font-display); font-weight: 600; color: var(--brand); }
+  .card-link { font-family: var(--font-display); font-weight: 600; color: #c4abff; }
   .service-card--more { background: var(--grad); color: #fff; border: 0; justify-content: center; }
+  .service-card--more:hover { box-shadow: var(--shadow-brand); }
   .service-card--more h3 { color: #fff; }
   .service-card--more .card-link { color: #fff; }
 
@@ -290,17 +291,17 @@ const faqs = [
     font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 1.9rem);
     line-height: 1.4; color: var(--ink); margin: 0 0 1.25rem;
   }
-  .testimonial cite { color: #6a6690; font-style: normal; font-weight: 500; }
+  .testimonial cite { color: var(--ink-soft); font-style: normal; font-weight: 500; }
 
   /* FAQ */
   .faq-wrap { max-width: 52rem; margin-inline: auto; }
   .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
   .faq-item {
     border: 1px solid var(--line); border-radius: var(--radius-sm);
-    padding: 0.25rem 1.25rem; background: #fff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 0.25rem 1.25rem; background: var(--surface-glass);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
-  .faq-item[open] { border-color: transparent; box-shadow: var(--shadow); }
+  .faq-item[open] { border-color: var(--line-strong); background: rgba(255,255,255,0.05); box-shadow: var(--glow); }
   .faq-item summary {
     cursor: pointer; list-style: none;
     font-family: var(--font-display); font-weight: 600; font-size: 1.1rem;

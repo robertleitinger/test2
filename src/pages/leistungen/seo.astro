@@ -121,8 +121,9 @@ const packages = [
 
   .price-grid { align-items: stretch; }
   .price-card {
-    position: relative; background: #fff; border: 1px solid var(--line);
+    position: relative; background: var(--surface-glass); border: 1px solid var(--line);
     border-radius: var(--radius); padding: 2rem 1.75rem; display: flex; flex-direction: column;
+    backdrop-filter: blur(6px);
   }
   .price-card.featured { border-color: var(--brand); box-shadow: var(--shadow-brand); }
   .badge {

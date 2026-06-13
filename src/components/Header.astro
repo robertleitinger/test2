@@ -70,39 +70,25 @@ const isActive = (href: string) =>
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.86);
-    backdrop-filter: blur(12px);
+    background: rgba(8, 6, 26, 0.55);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
     transition: background 0.25s ease, border-color 0.25s ease;
   }
-  .site-header.is-dark {
-    background: rgba(12, 10, 34, 0.55);
-    border-bottom-color: var(--line-dark);
-  }
-  .site-header.is-dark .nav-link { color: #fff; }
-  .site-header.is-dark .burger span { background: #fff; }
-  /* Beim Scrollen wieder solide */
+  /* Beim Scrollen etwas solider */
   .site-header.scrolled {
-    background: rgba(255, 255, 255, 0.92);
-    border-bottom-color: var(--line);
+    background: rgba(8, 6, 26, 0.82);
+    border-bottom-color: var(--line-strong);
   }
-  .site-header.scrolled .nav-link { color: var(--ink-2); }
-  .site-header.scrolled .burger span { background: var(--ink-2); }
-  .site-header.scrolled .brand-logo { filter: invert(1) hue-rotate(180deg) brightness(0.9); }
-  .is-dark:not(.scrolled) .brand-logo { filter: none; }
 
   .header-inner {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    height: 72px;
+    height: 74px;
   }
   .brand { display: inline-flex; align-items: center; line-height: 0; }
   .brand-logo { width: 150px; height: auto; }
-  /* Logo ist weiß: auf hellem Header dunkel einfärben */
-  .site-header:not(.is-dark) .brand-logo {
-    filter: invert(1) hue-rotate(180deg) brightness(0.9);
-  }
 
   .nav { margin-left: auto; }
   .nav-list { display: flex; gap: 0.35rem; list-style: none; margin: 0; padding: 0; }
@@ -120,8 +106,8 @@ const isActive = (href: string) =>
     text-decoration: none;
     transition: color 0.15s ease, background 0.15s ease;
   }
-  .nav-link:hover { background: rgba(95, 52, 240, 0.08); color: var(--brand); }
-  .nav-link.active { color: var(--brand); }
+  .nav-link:hover { background: rgba(124, 70, 255, 0.14); color: #fff; }
+  .nav-link.active { color: #c4abff; }
   .caret { font-size: 0.7em; opacity: 0.7; }
 
   .dropdown {
@@ -129,7 +115,7 @@ const isActive = (href: string) =>
     top: calc(100% + 8px);
     left: 0;
     min-width: 230px;
-    background: #fff;
+    background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow);
@@ -179,8 +165,8 @@ const isActive = (href: string) =>
   .burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   .mobile-panel {
-    background: var(--ink);
-    border-top: 1px solid var(--line-dark);
+    background: var(--bg-deep);
+    border-top: 1px solid var(--line);
   }
   .mobile-panel ul { list-style: none; margin: 0; padding: 1rem var(--gutter) 2rem; }
   .mobile-panel > ul > li { padding: 0.25rem 0; }
