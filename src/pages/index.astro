@@ -82,6 +82,7 @@ const faqs = [
 >
   <!-- HERO -->
   <section class="hero section--ink">
+    <canvas class="hero-shader" data-shader aria-hidden="true"></canvas>
     <canvas class="hero-canvas" data-particles aria-hidden="true"></canvas>
     <div class="container hero-inner">
       <p class="eyebrow float">// webdesign · seo · online marketing</p>
@@ -150,6 +151,21 @@ const faqs = [
       </div>
     </div>
   </section>
+
+  <!-- KINETIC TYPE -->
+  <div class="kinetic" aria-hidden="true">
+    <div class="kinetic__track">
+      {Array.from({ length: 2 }).map(() => (
+        <>
+          <span class="fill">Webdesign</span><span class="dot">✦</span>
+          <span>SEO</span><span class="dot">✦</span>
+          <span class="fill">WordPress</span><span class="dot">✦</span>
+          <span>Online Marketing</span><span class="dot">✦</span>
+          <span class="fill">Consulting</span><span class="dot">✦</span>
+        </>
+      ))}
+    </div>
+  </div>
 
   <!-- SERVICES -->
   <section class="section section--tint section--center">
@@ -265,13 +281,20 @@ const faqs = [
 
 <style>
   /* HERO */
-  .hero { padding-block: clamp(6.5rem, 15vw, 11rem) clamp(4rem, 9vw, 7rem); min-height: 92vh; display: flex; align-items: center; }
-  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.9; }
+  .hero { padding-block: clamp(7rem, 16vw, 12rem) clamp(4rem, 9vw, 7rem); min-height: 100vh; display: flex; align-items: center; }
+  .hero.section--ink::before { display: none; }
+  .hero-shader { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.5; }
   .hero .container { position: relative; z-index: 2; }
-  .hero-inner { max-width: 62rem; }
-  .hero-title { margin-bottom: 1.5rem; }
-  .hero-title .line { display: block; }
-  .hero-title .reveal-word { margin-right: 0.28em; }
+  .hero-inner { max-width: 64rem; }
+  .hero-title {
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.9rem, 8.5vw, 6.5rem);
+    line-height: 0.98; letter-spacing: -0.035em;
+    text-shadow: 0 8px 60px rgba(124, 70, 255, 0.35);
+  }
+  .hero-title .line { display: block; overflow: hidden; }
+  .hero-title .reveal-word { margin-right: 0.26em; }
   .hero-lead { color: var(--ink-soft); margin-bottom: 2rem; }
   .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
   .hero-meta {
@@ -389,6 +412,89 @@ const faqs = [
 
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- WebGL-Shader-Hero (fließende Nebel-Aurora auf der GPU) ---------- */
+  const shaderCanvas = document.querySelector<HTMLCanvasElement>('canvas[data-shader]');
+  if (shaderCanvas && !reduce) {
+    const gl = shaderCanvas.getContext('webgl', { antialias: true, premultipliedAlpha: false });
+    if (gl) {
+      const host = shaderCanvas.parentElement as HTMLElement;
+      const vert = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
+      const frag = `
+        precision highp float;
+        uniform float u_t; uniform vec2 u_r; uniform vec2 u_m;
+        vec2 hash(vec2 p){ p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))); return -1.0+2.0*fract(sin(p)*43758.5453123); }
+        float noise(vec2 p){ vec2 i=floor(p),f=fract(p); vec2 u=f*f*(3.0-2.0*f);
+          return mix(mix(dot(hash(i+vec2(0.0,0.0)),f-vec2(0.0,0.0)),dot(hash(i+vec2(1.0,0.0)),f-vec2(1.0,0.0)),u.x),
+                     mix(dot(hash(i+vec2(0.0,1.0)),f-vec2(0.0,1.0)),dot(hash(i+vec2(1.0,1.0)),f-vec2(1.0,1.0)),u.x),u.y); }
+        float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<6;i++){ v+=a*noise(p); p*=2.0; a*=0.5; } return v; }
+        void main(){
+          vec2 uv = gl_FragCoord.xy/u_r.xy;
+          vec2 p = uv; p.x *= u_r.x/u_r.y;
+          float t = u_t*0.05;
+          vec2 q = vec2(fbm(p+vec2(0.0,t)), fbm(p+vec2(5.2,1.3)-t));
+          vec2 r = vec2(fbm(p+3.5*q+vec2(1.7,9.2)+0.15*t), fbm(p+3.5*q+vec2(8.3,2.8)-0.12*t));
+          float n = fbm(p+3.5*r);
+          float md = distance(uv, u_m);
+          float glow = smoothstep(0.55,0.0,md)*0.35;
+          vec3 c1 = vec3(0.02,0.01,0.07);
+          vec3 c2 = vec3(0.37,0.20,0.95);
+          vec3 c3 = vec3(0.70,0.36,1.0);
+          vec3 c4 = vec3(0.29,0.89,0.84);
+          vec3 col = mix(c1, c2, smoothstep(0.05,0.6,n+r.x*0.4));
+          col = mix(col, c3, smoothstep(0.4,0.95,n*0.8+q.y*0.5));
+          col += c4*smoothstep(0.88,1.0,n)*0.5;
+          col += glow*c3;
+          float d = distance(uv, vec2(0.5,0.45));
+          col *= 1.0 - 0.6*d*d;
+          col += (hash(gl_FragCoord.xy+vec2(u_t)).x)*0.02;
+          gl_FragColor = vec4(col, 1.0);
+        }`;
+      const sh = (type: number, src: string) => { const s = gl.createShader(type)!; gl.shaderSource(s, src); gl.compileShader(s); return s; };
+      const prog = gl.createProgram()!;
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, vert));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, frag));
+      gl.linkProgram(prog); gl.useProgram(prog);
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const uT = gl.getUniformLocation(prog, 'u_t');
+      const uR = gl.getUniformLocation(prog, 'u_r');
+      const uM = gl.getUniformLocation(prog, 'u_m');
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      let mxs = 0.5, mys = 0.55;
+      const resizeS = () => {
+        const rect = host.getBoundingClientRect();
+        shaderCanvas.width = Math.max(1, rect.width*dpr);
+        shaderCanvas.height = Math.max(1, rect.height*dpr);
+        gl.viewport(0, 0, shaderCanvas.width, shaderCanvas.height);
+        gl.uniform2f(uR, shaderCanvas.width, shaderCanvas.height);
+      };
+      host.addEventListener('pointermove', (e) => {
+        const rect = host.getBoundingClientRect();
+        mxs = (e.clientX-rect.left)/rect.width;
+        mys = 1.0-(e.clientY-rect.top)/rect.height;
+      }, { passive: true });
+      window.addEventListener('resize', resizeS);
+      resizeS();
+      const start = performance.now();
+      let rafS = 0, mcx = 0.5, mcy = 0.55;
+      const drawS = (now: number) => {
+        mcx += (mxs-mcx)*0.05; mcy += (mys-mcy)*0.05;
+        gl.uniform1f(uT, (now-start)/1000);
+        gl.uniform2f(uM, mcx, mcy);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+        rafS = requestAnimationFrame(drawS);
+      };
+      const ioS = new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) { if (!rafS) rafS = requestAnimationFrame(drawS); }
+        else { cancelAnimationFrame(rafS); rafS = 0; }
+      }));
+      ioS.observe(host);
+    }
+  }
 
   /* ---------- Hero-Partikel-Konstellation ---------- */
   const canvas = document.querySelector<HTMLCanvasElement>('canvas[data-particles]');
