@@ -50,4 +50,14 @@ export const footerLinks = {
     { label: 'Datenschutzerklärung', href: '/datenschutz/' },
     { label: 'Impressum', href: '/impressum/' },
   ],
+  // Regionale SEO-Landingpages – intern verlinkt, damit sie nicht verwaisen.
+  regionen: [
+    { label: 'Webdesign Salzburg', href: '/webdesign-salzburg/' },
+    { label: 'Webdesign Hallein', href: '/webdesign-hallein/' },
+    { label: 'Webdesign Pongau', href: '/webdesign-pongau/' },
+    { label: 'Webdesign Pinzgau', href: '/webdesign-pinzgau/' },
+    { label: 'Webdesign Klagenfurt', href: '/webdesign-klagenfurt/' },
+    { label: 'Webdesign Chiemgau', href: '/webdesign-chiemgau/' },
+    { label: 'SEO Salzburg', href: '/seo-salzburg/' },
+  ],
 };

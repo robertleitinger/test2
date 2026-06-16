@@ -75,7 +75,7 @@ const office = [office1, office2, office3, office4, office5];
     <div class="container">
       <div class="section-head">
         <p class="kicker">impressionen</p>
-        <h2>Unser Office in Hallein</h2>
+        <h2>Unser Office</h2>
       </div>
       <div class="office-gallery">
         {office.map((o, i) => (
@@ -91,12 +91,13 @@ const office = [office1, office2, office3, office4, office5];
   <section class="section section--ink">
     <div class="container region-grid">
       <div data-reveal>
-        <p class="kicker">einsatzgebiete</p>
-        <h2>Vor Ort &amp; remote für Sie da</h2>
+        <p class="kicker">zusammenarbeit</p>
+        <h2>Für Sie da – im gesamten deutschsprachigen Raum</h2>
         <p class="lead">
-          Wir setzen Projekte für Kunden in der gesamten DACH-Region um. Direkt vor Ort sind wir
-          vor allem für Kunden in Österreich (Region Salzburg) sowie in Deutschland (Region Bayern)
-          tätig. Ansonsten arbeiten wir remote – per Video-Call, Telefon und E-Mail.
+          Wir betreuen Kunden in ganz Österreich, Deutschland und der Schweiz – ortsunabhängig
+          und unkompliziert per Video-Call, Telefon und E-Mail. So arbeiten wir genauso eng
+          zusammen, als säßen wir im selben Raum. Persönliche Termine im Office sind nach
+          Vereinbarung jederzeit möglich.
         </p>
         <a href="/kontakt/" class="btn btn--grad" data-open-form>Kontakt aufnehmen <span class="arrow" aria-hidden="true">→</span></a>
       </div>
@@ -104,7 +105,6 @@ const office = [office1, office2, office3, office4, office5];
         <p class="kicker">kontakt</p>
         {site.street}<br />
         {site.postalCode} {site.city}, {site.country}<br /><br />
-        <a href={site.phoneHref}>{site.phone}</a><br />
         <a href={`mailto:${site.email}`}>{site.email}</a><br />
         <span class="muted">{site.hours}</span>
       </address>

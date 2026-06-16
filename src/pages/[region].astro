@@ -1,0 +1,211 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Advantages from '../components/Advantages.astro';
+import { regionen } from '../data/regionen';
+import { projekte } from '../data/projekte';
+
+export function getStaticPaths() {
+  return regionen.map((r) => ({ params: { region: r.slug }, props: { region: r } }));
+}
+
+const { region } = Astro.props;
+
+// Standard-Webdesign-Prozess (4 Schritte), wird durch region.process überschrieben
+const webdesignProcess = {
+  heading: 'Unser Webdesign-Prozess',
+  lead: 'Wir verfolgen klare Prozesse und Strukturen – das sichert eine hohe Qualität und eine effiziente Umsetzung.',
+  steps: [
+    { t: 'Kostenloses Erstgespräch', d: 'Wir lernen Ihr Unternehmen, Ihre Ziele und Ihre Zielgruppe kennen – unverbindlich und ehrlich.' },
+    { t: 'Konzept & Entwurf', d: 'Sie sehen früh einen ersten Designentwurf und geben Feedback, bevor es in die Umsetzung geht.' },
+    { t: 'Entwicklung', d: 'Wir setzen Ihre Seite pixelperfekt, schnell und technisch sauber um – für alle Endgeräte, Google und KI.' },
+    { t: 'Go-live', d: 'Nach Ihrer Freigabe geht die Webseite online. Auf Wunsch betreuen wir sie auch danach.' },
+  ],
+};
+const process = region.process ?? webdesignProcess;
+
+const leistungen = [
+  { t: 'Webdesign & Redesign', d: 'Individuelle, optimierte Webseiten – kein Baukasten.', href: '/leistungen/' },
+  { t: 'Suchmaschinenoptimierung', d: 'Mehr Sichtbarkeit und Besucher über Google.', href: '/leistungen/seo/' },
+  { t: 'WordPress Agentur', d: 'Betreuung, Wartung & Erweiterung Ihrer Seite.', href: '/leistungen/wordpress-agentur/' },
+];
+
+// Referenz-Teaser (3 Projekte)
+const teaser = projekte.slice(0, 3);
+const mockups = import.meta.glob<{ default: ImageMetadata }>('../assets/images/projekte/*.png', { eager: true });
+const getMockup = (slug: string) => mockups[`../assets/images/projekte/${slug}.png`]?.default;
+
+const showLeistungen = region.showLeistungen ?? region.kind === 'webdesign';
+---
+
+<BaseLayout title={region.title} description={region.description} path={`/${region.slug}/`}>
+  <PageHero eyebrow={region.eyebrow} title={region.h1} lead={region.lead}>
+    <div class="hero-actions">
+      <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projekt anfragen <span class="arrow" aria-hidden="true">→</span></button>
+    </div>
+  </PageHero>
+
+  {region.testimonial && (
+    <section class="section section--tint section--center">
+      <div class="container">
+        <p class="kicker">was unsere kunden sagen</p>
+        <blockquote class="region-quote">
+          <p>„{region.testimonial.quote}“</p>
+          {region.testimonial.author && (
+            <footer>{region.testimonial.author}{region.testimonial.role ? ` · ${region.testimonial.role}` : ''}</footer>
+          )}
+        </blockquote>
+      </div>
+    </section>
+  )}
+
+  {region.sections.map((s, i) => (
+    <section class:list={['section', { 'section--tint': i % 2 === 1 }]}>
+      <div class="container region-prose" data-reveal>
+        <h2>{s.heading}</h2>
+        {s.body.map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+  ))}
+
+  <!-- PROZESS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">ablauf</p>
+        <h2>{process.heading}</h2>
+        {process.lead && <p class="lead">{process.lead}</p>}
+      </div>
+      <ol class="steps">
+        {process.steps.map((s, i) => (
+          <li class="step" data-reveal data-tilt>
+            <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- VORTEILE -->
+  <Advantages kicker="ihre vorteile" heading="Unsere Vorteile auf einen Blick" />
+
+  {showLeistungen && (
+    <section class="section section--center">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">leistungen</p>
+          <h2>Unsere Leistungen</h2>
+        </div>
+        <div class="grid grid--3">
+          {leistungen.map((w) => (
+            <a href={w.href} class="card weitere-card" data-reveal>
+              <h3>{w.t}</h3>
+              <p>{w.d}</p>
+              <span class="card-link">Mehr erfahren <span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- REFERENZEN-TEASER -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">referenzen & projekte</p>
+        <h2>Umgesetzte Projekte</h2>
+      </div>
+      <div class="region-refs">
+        {teaser.map((p) => {
+          const img = getMockup(p.slug);
+          return (
+            <a class="region-ref" href={`/referenzen/${p.slug}/`} data-reveal data-tilt>
+              {img && <Image src={img} alt={p.name} width={520} height={364} quality={84} />}
+              <span class="region-ref-name">{p.name}</span>
+            </a>
+          );
+        })}
+      </div>
+      <p class="region-refs-all"><a href="/referenzen/">Alle Referenzen ansehen <span class="arrow" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  {region.faq && (
+    <section class="section">
+      <div class="container faq-wrap">
+        <div class="section-head section--center">
+          <p class="kicker">fragen & antworten</p>
+          <h2>Häufige Fragen</h2>
+        </div>
+        <div class="faq-list">
+          {region.faq.map((f) => (
+            <details class="faq-item" data-reveal>
+              <summary>{f.q}</summary>
+              <div class="faq-answer">{f.a.map((p) => <p>{p}</p>)}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Bereit für mehr Sichtbarkeit?</h2>
+      <p class="lead">Erstgespräch kostenlos, Angebot zum Festpreis. Lassen Sie uns über Ihr Projekt sprechen.</p>
+      <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projekt anfragen <span class="arrow" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-actions { margin-top: 2rem; }
+  .region-prose { max-width: 760px; }
+  .region-prose h2 { margin-bottom: 1rem; }
+  .region-prose p { color: var(--ink-soft); margin: 0 0 1rem; }
+
+  .region-quote { max-width: 780px; margin: 1.5rem auto 0; }
+  .region-quote p { font-family: var(--font-display); font-size: clamp(1.2rem, 2.6vw, 1.7rem); line-height: 1.4; color: #fff; }
+  .region-quote footer { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .step { background: var(--surface-glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.75rem; backdrop-filter: blur(10px); }
+  .step-num { font-family: var(--font-mono); font-size: 1rem; font-weight: 500; color: #9b86ff; }
+  .step h3 { margin: 0.75rem 0 0.5rem; font-size: 1.15rem; }
+  .step p { font-size: 0.95rem; margin: 0; color: var(--ink-soft); }
+
+  .weitere-card { display: flex; flex-direction: column; color: var(--ink-2); text-decoration: none; text-align: left; }
+  .weitere-card:hover { text-decoration: none; }
+  .weitere-card h3 { margin-bottom: 0.4rem; }
+  .weitere-card p { font-size: 0.95rem; flex: 1; }
+  .card-link { font-family: var(--font-display); font-weight: 600; color: #9b86ff; }
+
+  .region-refs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+  .region-ref { display: flex; flex-direction: column; gap: 0.85rem; text-decoration: none; color: var(--ink-2); }
+  .region-ref:hover { text-decoration: none; }
+  .region-ref :global(img) { width: 100%; height: auto; display: block; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5)); transition: transform 0.4s ease; }
+  .region-ref:hover :global(img) { transform: translateY(-4px) scale(1.02); }
+  .region-ref-name { font-family: var(--font-display); font-weight: 600; }
+  .region-refs-all { margin-top: 1.75rem; }
+  .region-refs-all a { font-family: var(--font-display); font-weight: 600; color: #9b86ff; }
+
+  .faq-wrap { max-width: 820px; }
+  .faq-list { margin-top: 1.5rem; }
+  .faq-item { border: 1px solid var(--line); border-radius: var(--radius); padding: 0 1.25rem; margin-bottom: 0.85rem; background: var(--surface-glass); }
+  .faq-item summary { cursor: pointer; padding: 1.1rem 0; font-family: var(--font-display); font-weight: 600; list-style: none; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: #9b86ff; }
+  .faq-answer { padding-bottom: 1.1rem; }
+  .faq-answer p { color: var(--ink-soft); margin: 0 0 0.75rem; }
+
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+
+  @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .region-refs { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+</style>

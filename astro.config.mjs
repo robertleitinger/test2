@@ -16,6 +16,8 @@ export default defineConfig({
   redirects: {
     // Webdesign-Detailseite ist in /leistungen/ aufgegangen – alte URL erhalten.
     '/leistungen/webdesign/': '/leistungen/',
+    // simple-moving leitet wie auf der Live-Seite auf die Referenzübersicht.
+    '/referenzen/simple-moving/': '/referenzen/',
   },
   integrations: live ? [sitemap()] : [],
 });
