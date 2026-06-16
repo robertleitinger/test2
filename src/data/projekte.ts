@@ -15,6 +15,8 @@ export interface Projekt {
   text: string[];
   /** Dateiendung des Screenshots (Banner). Default: jpg */
   shotExt?: 'jpg' | 'png';
+  /** Nutzt das neue „cinematic" Detailseiten-Layout (Screenshot-Hero oben). */
+  feature?: boolean;
 }
 
 export const projekte: Projekt[] = [
@@ -23,7 +25,11 @@ export const projekte: Projekt[] = [
     name: 'THE EASE – Chiropraktik',
     tag: 'Webdesign · Onepager',
     url: 'https://theease.de/',
-    text: ['Modernes One-Page-Webdesign für eine sympathische Chiropraktikerin aus Hamburg.'],
+    feature: true,
+    text: [
+      'Modernes One-Page-Webdesign für eine sympathische Chiropraktikerin aus Hamburg.',
+      'Ruhige, vitalistische Bildsprache, klare Typografie und ein durchdachter Aufbau führen Besucher Schritt für Schritt von der Philosophie bis zur Terminanfrage – schnell, responsive und suchmaschinenfreundlich umgesetzt.',
+    ],
   },
   {
     slug: 'kung-fu-webseite',

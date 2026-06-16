@@ -26,35 +26,91 @@ const description = projekt.text[0];
   description={description}
   path={`/referenzen/${projekt.slug}/`}
 >
-  <PageHero eyebrow={projekt.tag} title={projekt.name} />
-
-  <section class="section">
-    <div class="container">
-      <div class="case-grid">
-        {mockup && (
-          <figure class="case-media" data-reveal>
-            <Image src={mockup} alt={`${projekt.name} – Webdesign von CodeRocker`} width={1000} height={700} quality={86} />
-          </figure>
-        )}
-        <div class="case-text" data-reveal>
-          {projekt.text.map((p) => <p>{p}</p>)}
+  {projekt.feature ? (
+    <!-- ===== Cinematic-Layout: Screenshot-Hero oben ===== -->
+    <section class="case-hero section--ink">
+      <div class="case-hero-glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="case-hero-head" data-reveal>
+          <p class="kicker">{projekt.tag}</p>
+          <h1>{projekt.name}</h1>
+          {description && <p class="lead case-hero-sub">{description}</p>}
           {projekt.url && (
-            <a class="btn btn--ghost case-visit" href={projekt.url} target="_blank" rel="noopener">
+            <a class="btn btn--grad" href={projekt.url} target="_blank" rel="noopener" data-magnetic>
               {host} besuchen <span class="arrow" aria-hidden="true">→</span>
             </a>
           )}
         </div>
+
+        {shot && (
+          <div class="browser-wrap" data-reveal="scale">
+            <div class="browser-frame">
+              <div class="browser-bar">
+                <span class="browser-dots"><i></i><i></i><i></i></span>
+                {host && <span class="browser-url">{host}</span>}
+              </div>
+              <div class="browser-screen">
+                <Image src={shot} alt={`Website von ${projekt.name}`} width={1600} height={848} quality={86} loading="eager" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+    </section>
 
-      {shot && (
-        <figure class="case-shot" data-reveal>
-          <Image src={shot} alt={`Screenshot der Webseite ${projekt.name}`} width={1280} height={660} quality={82} />
-        </figure>
-      )}
+    <section class="section">
+      <div class="container">
+        <div class="case-grid case-grid--rev">
+          {mockup && (
+            <figure class="case-media" data-reveal="right" data-tilt>
+              <Image src={mockup} alt={`${projekt.name} – responsive auf Desktop & Smartphone`} width={1000} height={700} quality={86} />
+            </figure>
+          )}
+          <div class="case-text" data-reveal="left">
+            {projekt.text.map((p) => <p>{p}</p>)}
+            {projekt.url && (
+              <a class="btn btn--ghost case-visit" href={projekt.url} target="_blank" rel="noopener">
+                {host} ansehen <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
+        </div>
+        <p class="case-back" data-reveal><a href="/referenzen/">← Alle Referenzen ansehen</a></p>
+      </div>
+    </section>
+  ) : (
+    <!-- ===== Standard-Layout ===== -->
+    <Fragment>
+      <PageHero eyebrow={projekt.tag} title={projekt.name} />
+      <section class="section">
+        <div class="container">
+          <div class="case-grid">
+            {mockup && (
+              <figure class="case-media" data-reveal>
+                <Image src={mockup} alt={`${projekt.name} – Webdesign von CodeRocker`} width={1000} height={700} quality={86} />
+              </figure>
+            )}
+            <div class="case-text" data-reveal>
+              {projekt.text.map((p) => <p>{p}</p>)}
+              {projekt.url && (
+                <a class="btn btn--ghost case-visit" href={projekt.url} target="_blank" rel="noopener">
+                  {host} besuchen <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              )}
+            </div>
+          </div>
 
-      <p class="case-back" data-reveal><a href="/referenzen/">← Alle Referenzen ansehen</a></p>
-    </div>
-  </section>
+          {shot && (
+            <figure class="case-shot" data-reveal>
+              <Image src={shot} alt={`Screenshot der Webseite ${projekt.name}`} width={1280} height={660} quality={82} />
+            </figure>
+          )}
+
+          <p class="case-back" data-reveal><a href="/referenzen/">← Alle Referenzen ansehen</a></p>
+        </div>
+      </section>
+    </Fragment>
+  )}
 
   <section class="section section--ink section--center cta-band">
     <div class="container">
@@ -66,6 +122,7 @@ const description = projekt.text[0];
 </BaseLayout>
 
 <style>
+  /* ---------- Standard-Layout ---------- */
   .case-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   .case-media { margin: 0; line-height: 0; }
   .case-media :global(img) {
@@ -83,5 +140,76 @@ const description = projekt.text[0];
   .case-back a { font-family: var(--font-display); font-weight: 600; color: #9b86ff; }
   .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
   .cta-band h2 { margin-bottom: 0.75rem; }
-  @media (max-width: 820px) { .case-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- Cinematic-Layout ---------- */
+  .case-hero {
+    position: relative; overflow: hidden;
+    padding-block: clamp(5.5rem, 12vw, 8rem) clamp(3rem, 7vw, 5rem);
+  }
+  .case-hero-glow {
+    position: absolute; inset: -20% 0 auto 50%; transform: translateX(-50%);
+    width: min(1100px, 120%); aspect-ratio: 2 / 1; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(95, 52, 240, 0.42), rgba(95, 52, 240, 0) 62%);
+    filter: blur(8px); z-index: 0;
+  }
+  .case-hero .container { position: relative; z-index: 1; }
+  .case-hero-head { max-width: 60ch; }
+  .case-hero-head h1 { margin: 0.25rem 0 0; }
+  .case-hero-sub { color: var(--ink-soft); margin: 1.1rem 0 1.75rem; max-width: 52ch; }
+
+  /* Browser-Fensterrahmen */
+  .browser-wrap { margin-top: clamp(2.25rem, 5vw, 3.5rem); perspective: 1600px; }
+  .browser-frame {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #14121b;
+    box-shadow: 0 50px 90px -40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.04),
+      0 0 60px -10px rgba(95, 52, 240, 0.35);
+    will-change: transform;
+  }
+  .browser-bar {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding: 0.7rem 1rem; background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .browser-dots { display: inline-flex; gap: 0.45rem; flex: 0 0 auto; }
+  .browser-dots i { width: 0.72rem; height: 0.72rem; border-radius: 50%; background: #ff5f57; }
+  .browser-dots i:nth-child(2) { background: #febc2e; }
+  .browser-dots i:nth-child(3) { background: #28c840; }
+  .browser-url {
+    flex: 1; max-width: 360px; text-align: center;
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-soft);
+    background: rgba(0, 0, 0, 0.35); border-radius: 999px; padding: 0.3rem 0.9rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .browser-screen { aspect-ratio: 16 / 10; overflow: hidden; }
+  .browser-screen :global(img) {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; object-position: top center;
+    transition: object-position 2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s ease;
+  }
+  /* Hover = sanftes „Durchscrollen" der Seite (reine CSS-Transition) */
+  .browser-frame:hover .browser-screen :global(img) { object-position: bottom center; }
+
+  .case-grid--rev { margin-top: 0.5rem; }
+
+  /* Scroll-driven Parallax – nur wo unterstützt, ohne JS, GPU-freundlich */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .browser-frame {
+        animation: browserParallax linear both;
+        animation-timeline: view();
+        animation-range: entry 0% exit 100%;
+      }
+      @keyframes browserParallax {
+        from { transform: translateY(40px); }
+        to { transform: translateY(-40px); }
+      }
+    }
+  }
+
+  @media (max-width: 820px) {
+    .case-grid { grid-template-columns: 1fr; }
+    .browser-screen { aspect-ratio: 4 / 3; }
+  }
 </style>
