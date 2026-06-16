@@ -23,34 +23,77 @@ const {
   heroDark = false,
 } = Astro.props;
 
+const live = import.meta.env.PUBLIC_SITE_LIVE === 'true';
+
 const canonical = new URL(path, site.url).href;
 const ogImageUrl = new URL(ogImage, site.url).href;
 
+// Breadcrumb-Pfad aus dem URL-Pfad ableiten (saubere Verzeichnis-URLs mit Slash)
+const crumbLabels: Record<string, string> = {
+  leistungen: 'Leistungen',
+  referenzen: 'Referenzen',
+  'ueber-uns': 'Über uns',
+  kontakt: 'Kontakt',
+  seo: 'SEO',
+  'wordpress-agentur': 'WordPress Agentur',
+  'seo-consultant': 'SEO Consulting',
+  agb: 'AGB',
+  datenschutz: 'Datenschutz',
+  impressum: 'Impressum',
+};
+const segments = path.split('/').filter(Boolean);
+const breadcrumb = segments.length
+  ? {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Start', item: site.url + '/' },
+        ...segments.map((seg, i) => ({
+          '@type': 'ListItem',
+          position: i + 2,
+          name: crumbLabels[seg] ?? seg.replace(/-/g, ' '),
+          item: new URL(segments.slice(0, i + 1).join('/') + '/', site.url).href,
+        })),
+      ],
+    }
+  : null;
+
+// Strukturierte Daten als @graph: Firma (ProfessionalService = LocalBusiness-Subtyp,
+// echte Adresse) + WebSite, auf Unterseiten zusätzlich BreadcrumbList.
+// Bewusst KEIN aggregateRating/review – nur belegbare Daten ins Schema.
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: site.name,
-  description,
-  url: site.url,
-  email: site.email,
-  telephone: site.phone,
-  image: ogImageUrl,
-  priceRange: '€€',
-  founder: { '@type': 'Person', name: site.owner },
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: site.street,
-    postalCode: site.postalCode,
-    addressLocality: site.city,
-    addressCountry: 'AT',
-  },
-  openingHours: 'Mo-Fr 09:00-17:00',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '12',
-  },
-  areaServed: ['Österreich', 'Deutschland', 'Schweiz', 'DACH'],
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': site.url + '/#organization',
+      name: site.name,
+      description,
+      url: site.url,
+      email: site.email,
+      telephone: site.phone,
+      image: ogImageUrl,
+      priceRange: '€€',
+      founder: { '@type': 'Person', name: site.owner },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: site.street,
+        postalCode: site.postalCode,
+        addressLocality: site.city,
+        addressCountry: 'AT',
+      },
+      openingHours: 'Mo-Fr 09:00-17:00',
+      areaServed: ['Österreich', 'Deutschland', 'Schweiz', 'DACH'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': site.url + '/#website',
+      url: site.url,
+      name: site.name,
+      inLanguage: 'de',
+      publisher: { '@id': site.url + '/#organization' },
+    },
+    ...(breadcrumb ? [breadcrumb] : []),
+  ],
 };
 ---
 
@@ -59,6 +102,8 @@ const jsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {!live && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="canonical" href={canonical} />
     <title>{title}</title>
@@ -77,7 +122,7 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImageUrl} />
 
     <meta name="theme-color" content="#5333ED" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    {live && <link rel="sitemap" href="/sitemap-index.xml" />}
     <ClientRouter />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
@@ -214,13 +259,24 @@ const jsonLd = {
             window.addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth; my = 1 - e.clientY / innerHeight; }, { passive: true });
             window.addEventListener('resize', resize); resize();
             const start = performance.now();
+            let running = true;
             const draw = (now: number) => {
+              if (!running) return;
               cx += (mx - cx) * 0.04; cy += (my - cy) * 0.04;
               gl.uniform1f(uT, (now - start) / 1000);
               gl.uniform2f(uM, cx, cy);
               gl.drawArrays(gl.TRIANGLES, 0, 3);
               requestAnimationFrame(draw);
             };
+            // CPU/Akku sparen: Schleife im Hintergrund-Tab oder bei nicht sichtbarem Canvas pausieren
+            const startLoop = () => { if (!running) { running = true; requestAnimationFrame(draw); } };
+            const stopLoop = () => { running = false; };
+            document.addEventListener('visibilitychange', () => { document.hidden ? stopLoop() : startLoop(); });
+            if ('IntersectionObserver' in window) {
+              new IntersectionObserver((es) => {
+                es.forEach((e) => (e.isIntersecting && !document.hidden ? startLoop() : stopLoop()));
+              }, { threshold: 0 }).observe(sc);
+            }
             requestAnimationFrame(draw);
           }
         }
