@@ -308,6 +308,24 @@ const jsonLd = {
           window.addEventListener('scroll', onP, { passive: true });
         }
 
+        // 3D-Scroll-Tilt (cross-browser, ohne scroll-driven CSS) – richtet das Element
+        // beim Hochscrollen aus der leichten Rücklage auf.
+        const tl = Array.from(document.querySelectorAll<HTMLElement>('[data-scroll-tilt]'));
+        if (tl.length && !reduceMotion) {
+          const onT = () => tl.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            const max = parseFloat(el.dataset.scrollTilt || '16');
+            // Mitte des Elements relativ zur Viewport-Höhe (0 = oben, 1 = unten)
+            const p = (r.top + r.height / 2) / innerHeight;
+            // Unterhalb der Mitte => Rücklage; in/oberhalb der Mitte => aufgerichtet
+            const deg = Math.max(0, Math.min(max, (p - 0.5) * 2 * max));
+            el.style.setProperty('--tiltX', deg.toFixed(2) + 'deg');
+          });
+          onT();
+          window.addEventListener('scroll', onT, { passive: true });
+          window.addEventListener('resize', onT, { passive: true });
+        }
+
         if (!reduceMotion && fine) {
           // 3D-Tilt
           document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
