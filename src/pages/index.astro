@@ -146,25 +146,25 @@ const refs = [
 
 <style>
   /* HERO */
-  .hero { padding-block: clamp(8rem, 16vw, 13rem) clamp(4rem, 9vw, 7rem); min-height: min(100svh, 1120px); display: flex; align-items: center; }
+  .hero { padding-block: clamp(5rem, 11vw, 8.5rem) clamp(3.5rem, 7vw, 5.5rem); min-height: min(82svh, 880px); display: flex; align-items: center; }
   .hero.section--ink { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .hero.section--ink::before { display: none; }
   .hero .container { position: relative; z-index: 2; }
   .hero-inner { max-width: var(--maxw); }
   .hero-title {
-    margin-bottom: 1.5rem;
-    font-size: clamp(2.6rem, 7.75vw, 5.85rem);
-    line-height: 1.02; letter-spacing: -0.035em; font-weight: 800;
-    text-shadow: 0 8px 60px rgba(83, 51, 237, 0.4);
+    margin-bottom: 1.35rem;
+    font-size: clamp(2.3rem, 6vw, 4.6rem);
+    line-height: 1.04; letter-spacing: -0.035em; font-weight: 800;
+    text-shadow: 0 6px 40px rgba(83, 51, 237, 0.25);
   }
   .hero-title .line { display: block; overflow: hidden; }
   .hero-title .reveal-word { margin-right: 0.2em; }
   .hero-title .line .reveal-word:last-child { margin-right: 0; }
   .br-m { display: none; }
   .hero-lead {
-    color: #fff; font-weight: 500; margin-bottom: 2rem;
-    font-size: clamp(1.5rem, 2.9vw, 2.3rem);
-    line-height: 1.4; max-width: 68rem;
+    color: #fff; font-weight: 500; margin-bottom: 1.85rem;
+    font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+    line-height: 1.45; max-width: 60rem;
   }
   /* Slogan am Desktop garantiert auf 2 ausgefüllte Zeilen halten */
   @media (min-width: 821px) {

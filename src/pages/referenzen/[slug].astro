@@ -35,11 +35,6 @@ const description = projekt.text[0];
           <p class="kicker">{projekt.tag}</p>
           <h1>{projekt.name}</h1>
           {description && <p class="lead case-hero-sub">{description}</p>}
-          {projekt.url && (
-            <a class="btn btn--grad" href={projekt.url} target="_blank" rel="noopener" data-magnetic>
-              {host} besuchen <span class="arrow" aria-hidden="true">→</span>
-            </a>
-          )}
         </div>
 
         {shot && (
@@ -51,6 +46,7 @@ const description = projekt.text[0];
               </div>
               <div class="browser-screen">
                 <Image src={shot} alt={`Website von ${projekt.name}`} width={1600} height={848} quality={86} loading="eager" />
+                <span class="browser-sheen" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -158,8 +154,9 @@ const description = projekt.text[0];
   .case-hero-sub { color: var(--ink-soft); margin: 1.1rem 0 1.75rem; max-width: 52ch; }
 
   /* Browser-Fensterrahmen */
-  .browser-wrap { margin-top: clamp(2.25rem, 5vw, 3.5rem); perspective: 1600px; }
+  .browser-wrap { margin-top: clamp(2.25rem, 5vw, 3.5rem); perspective: 1400px; perspective-origin: center 30%; }
   .browser-frame {
+    transform-style: preserve-3d;
     border-radius: 16px; overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.12);
     background: #14121b;
@@ -182,7 +179,7 @@ const description = projekt.text[0];
     background: rgba(0, 0, 0, 0.35); border-radius: 999px; padding: 0.3rem 0.9rem;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .browser-screen { aspect-ratio: 16 / 10; overflow: hidden; }
+  .browser-screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
   .browser-screen :global(img) {
     width: 100%; height: 100%; display: block;
     object-fit: cover; object-position: top center;
@@ -191,19 +188,38 @@ const description = projekt.text[0];
   /* Hover = sanftes „Durchscrollen" der Seite (reine CSS-Transition) */
   .browser-frame:hover .browser-screen :global(img) { object-position: bottom center; }
 
+  /* Glanz-/Licht-Sweep über das Bild */
+  .browser-sheen {
+    position: absolute; top: 0; left: 0; width: 60%; height: 100%;
+    pointer-events: none; opacity: 0; mix-blend-mode: overlay;
+    transform: translateX(-120%) skewX(-18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  }
+
   .case-grid--rev { margin-top: 0.5rem; }
 
-  /* Scroll-driven Parallax – nur wo unterstützt, ohne JS, GPU-freundlich */
+  /* Scroll-driven 3D-Aufrichten + Sheen – nur wo unterstützt, ohne JS, GPU-freundlich */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
       .browser-frame {
-        animation: browserParallax linear both;
+        transform-origin: center bottom;
+        animation: browserRaise linear both;
         animation-timeline: view();
-        animation-range: entry 0% exit 100%;
+        animation-range: entry 8% cover 42%;
       }
-      @keyframes browserParallax {
-        from { transform: translateY(40px); }
-        to { transform: translateY(-40px); }
+      @keyframes browserRaise {
+        from { transform: rotateX(20deg) scale(0.92); }
+        to { transform: rotateX(0deg) scale(1); }
+      }
+      .browser-sheen {
+        animation: browserSheen linear both;
+        animation-timeline: view();
+        animation-range: entry 25% cover 60%;
+      }
+      @keyframes browserSheen {
+        0% { opacity: 0; transform: translateX(-120%) skewX(-18deg); }
+        35% { opacity: 1; }
+        100% { opacity: 0; transform: translateX(220%) skewX(-18deg); }
       }
     }
   }
