@@ -126,20 +126,6 @@ li { margin-bottom: 0.4em; }
   position: relative;
   overflow: hidden;
 }
-
-/* Aurora-Glow für tiefe Sektionen */
-.section--ink::before {
-  content: '';
-  position: absolute;
-  inset: -40% -10% auto -10%;
-  height: 110%;
-  background:
-    radial-gradient(55% 60% at 25% 15%, rgba(83, 51, 237, 0.5), transparent 70%),
-    radial-gradient(45% 55% at 88% 8%, rgba(111, 77, 255, 0.32), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(10px);
-}
 .section--ink > * { position: relative; z-index: 1; }
 
 .lead {
@@ -347,26 +333,6 @@ li { margin-bottom: 0.4em; }
     radial-gradient(120% 80% at 50% 0%, transparent 35%, rgba(0, 0, 0, 0.7) 100%);
 }
 
-/* Driftende Ambient-Aurora (Fallback hinter dem Shader) */
-.fx-aurora {
-  position: fixed;
-  inset: -20vmax;
-  z-index: -4;
-  pointer-events: none;
-  background:
-    radial-gradient(38vmax 30vmax at 12% 8%, rgba(83, 51, 237, 0.30), transparent 60%),
-    radial-gradient(34vmax 30vmax at 88% 4%, rgba(111, 77, 255, 0.22), transparent 60%),
-    radial-gradient(30vmax 26vmax at 70% 90%, rgba(75, 227, 216, 0.10), transparent 60%),
-    radial-gradient(28vmax 24vmax at 20% 80%, rgba(83, 51, 237, 0.16), transparent 60%);
-  filter: blur(20px);
-  animation: auroraDrift 26s ease-in-out infinite alternate;
-}
-@keyframes auroraDrift {
-  0%   { transform: translate3d(-3%, -2%, 0) scale(1); }
-  50%  { transform: translate3d(4%, 3%, 0) scale(1.08); }
-  100% { transform: translate3d(-2%, 4%, 0) scale(1.03); }
-}
-
 /* Feines Korn / Grain */
 .fx-grain {
   position: fixed;
@@ -447,12 +413,12 @@ li { margin-bottom: 0.4em; }
 @keyframes fadeIn { to { opacity: 1; } }
 
 /* Kinetische Riesen-Typo (Lauftext-Divider) */
-.kinetic { overflow: hidden; border-block: 1px solid var(--line); padding: 0.85rem 0; background: rgba(255, 255, 255, 0.015); }
-.kinetic__track { display: flex; align-items: center; gap: 2.1rem; width: max-content; animation: marquee 28s linear infinite; }
+.kinetic { overflow: hidden; border-block: 1px solid var(--line); padding: 0.5rem 0; background: rgba(255, 255, 255, 0.015); }
+.kinetic__track { display: flex; align-items: center; gap: 1.4rem; width: max-content; animation: marquee 28s linear infinite; }
 .kinetic__track span {
   font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(1.25rem, 3.3vw, 2.5rem); letter-spacing: -0.02em;
-  color: transparent; -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.32);
+  font-size: clamp(0.8rem, 1.7vw, 1.2rem); letter-spacing: -0.02em;
+  color: transparent; -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.32);
   white-space: nowrap;
 }
 .kinetic__track .fill { color: #fff; -webkit-text-stroke: 0; }
@@ -467,10 +433,7 @@ li { margin-bottom: 0.4em; }
 .form-modal.is-open { opacity: 1; visibility: visible; }
 .form-modal__backdrop {
   position: absolute; inset: 0;
-  background:
-    radial-gradient(70% 60% at 50% 28%, rgba(83, 51, 237, 0.22), transparent 70%),
-    radial-gradient(50% 50% at 85% 90%, rgba(111, 77, 255, 0.16), transparent 70%),
-    #000;
+  background: rgba(0, 0, 0, 0.92);
 }
 .form-modal__panel {
   position: relative; height: 100%; width: 100%;
@@ -520,7 +483,7 @@ body.modal-open { overflow: hidden; }
   }
   [data-reveal] { opacity: 1; transform: none; }
   .reveal-word { opacity: 1; transform: none; }
-  .fx-aurora, .fx-grain { animation: none; }
+  .fx-grain { animation: none; }
   [data-tilt] { transform: none !important; }
   .loader { display: none; }
 }
