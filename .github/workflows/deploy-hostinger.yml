@@ -35,15 +35,44 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      # FTP-Upload mit automatischen Wiederholversuchen + Backoff.
+      # Hostinger drosselt wiederholte FTP-Verbindungen gelegentlich
+      # ("Timeout (control socket)") – die Retries fangen das ab, ohne
+      # dass der Lauf manuell neu gestartet werden muss.
+      # Hinweis zum Pfad: Der Account startet im Unterordner public_html,
+      # aber die FTP-Wurzel "/" ist der echte Document-Root (URL /).
       - name: Deploy to Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # Der FTP-Zugang startet zwar im Unterordner public_html,
-          # aber die FTP-Wurzel "/" ist der echte Document-Root der
-          # Subdomain (URL /). Daher dorthin deployen.
-          server-dir: /
-          local-dir: ./dist/
-          protocol: ftp
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          set -uo pipefail
+          deploy() {
+            lftp -c "
+              set cmd:fail-exit yes;
+              set ftp:ssl-allow no;
+              set net:timeout 25;
+              set net:max-retries 2;
+              set net:reconnect-interval-base 5;
+              set mirror:parallel-transfer-count 3;
+              open -u '$FTP_USERNAME','$FTP_PASSWORD' 'ftp://$FTP_SERVER';
+              mirror --reverse --verbose --no-perms dist/ /;
+            "
+          }
+          for attempt in 1 2 3 4 5; do
+            echo "::group::FTP deploy – Versuch $attempt"
+            if deploy; then
+              echo "::endgroup::"
+              echo "✅ Deploy erfolgreich (Versuch $attempt)"
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "⚠️ Versuch $attempt fehlgeschlagen – warte $((attempt * 15))s …"
+            sleep $((attempt * 15))
+          done
+          echo "❌ Alle Deploy-Versuche fehlgeschlagen"
+          exit 1
