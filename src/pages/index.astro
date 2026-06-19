@@ -24,7 +24,7 @@ const refs = [
 >
   <!-- HERO -->
   <section class="hero section--ink">
-    <div class="hero-spotlight" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
     <div class="container hero-inner">
       <h1 class="hero-title">
         <span class="line">
@@ -98,7 +98,7 @@ const refs = [
   <!-- VORTEILE -->
   <Advantages
     kicker="warum coderocker"
-    heading="Mehr als nur schön"
+    heading={'Mehr als „nur schön“'}
     lead="Eine gute Webseite ist eine Investition mit Rendite – technisch perfekt gebaut, damit sie für Sie arbeitet."
   />
 
@@ -151,39 +151,29 @@ const refs = [
   .hero.section--ink { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .hero .container { position: relative; z-index: 2; }
 
-  /* Spektakulärer Hero: langsam driftende Aurora-Blobs + Maus-Spotlight */
-  .hero::before, .hero::after {
-    content: ''; position: absolute; z-index: 0; pointer-events: none;
-    border-radius: 50%; filter: blur(90px); will-change: transform;
+  /* Hero-Effekt: feines, langsam scrollendes Tech-Grid, zum Rand ausgeblendet */
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 62px 62px;
+    -webkit-mask-image: radial-gradient(125% 90% at 50% 0%, #000 28%, transparent 78%);
+    mask-image: radial-gradient(125% 90% at 50% 0%, #000 28%, transparent 78%);
+    animation: gridDrift 26s linear infinite;
   }
-  .hero::before {
-    width: 48vw; height: 48vw; left: -10vw; top: -14vw; opacity: 0.55;
-    background: radial-gradient(circle, rgba(83, 51, 237, 0.55), transparent 68%);
-    animation: heroBlobA 18s ease-in-out infinite alternate;
-  }
-  .hero::after {
-    width: 44vw; height: 44vw; right: -10vw; top: 2vw; opacity: 0.5;
-    background: radial-gradient(circle, rgba(123, 92, 255, 0.42), transparent 68%);
-    animation: heroBlobB 23s ease-in-out infinite alternate;
-  }
-  @keyframes heroBlobA { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(6vw, 5vw, 0) scale(1.18); } }
-  @keyframes heroBlobB { from { transform: translate3d(0,0,0) scale(1.05); } to { transform: translate3d(-5vw, 7vw, 0) scale(0.92); } }
-  .hero-spotlight {
-    position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 26%), rgba(150, 120, 255, 0.22), transparent 60%);
-    opacity: 0; transition: opacity 0.45s ease; mix-blend-mode: screen;
-  }
-  .hero:hover .hero-spotlight { opacity: 1; }
+  @keyframes gridDrift { from { background-position: 0 0, 0 0; } to { background-position: 0 62px, 0 62px; } }
   @media (prefers-reduced-motion: reduce) {
-    .hero::before, .hero::after { animation: none; }
+    .hero-grid { animation: none; }
   }
   .hero-inner { max-width: var(--maxw); }
   .hero-title {
     margin-bottom: 1.5rem;
-    font-size: clamp(2.5rem, 6.2vw, 4.8rem);
+    font-size: clamp(2.6rem, 6.5vw, 5.1rem);
     line-height: 1.05; letter-spacing: -0.032em; font-weight: 800;
   }
-  .hero-title .line { display: block; overflow: hidden; }
+  /* padding-bottom + negativer margin: Maske bleibt, aber Unterlängen (g, y …) werden nicht abgeschnitten */
+  .hero-title .line { display: block; overflow: hidden; padding-bottom: 0.18em; margin-bottom: -0.18em; }
   .hero-title .reveal-word { margin-right: 0.2em; }
   .hero-title .line .reveal-word:last-child { margin-right: 0; }
   .br-m { display: none; }
@@ -261,20 +251,3 @@ const refs = [
     .kinetic { display: none; }
   }
 </style>
-
-<script>
-  // Maus-Spotlight im Hero: aktualisiert CSS-Variablen für den Verlauf.
-  function initHeroSpotlight() {
-    const hero = document.querySelector<HTMLElement>('.hero');
-    if (!hero || hero.dataset.spot === '1') return;
-    if (window.matchMedia('(hover: none)').matches) return; // nur Zeigergeräte
-    hero.dataset.spot = '1';
-    hero.addEventListener('pointermove', (e) => {
-      const r = hero.getBoundingClientRect();
-      hero.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
-      hero.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
-    });
-  }
-  document.addEventListener('astro:page-load', initHeroSpotlight);
-  initHeroSpotlight();
-</script>
