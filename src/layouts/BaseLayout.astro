@@ -1,0 +1,315 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ObfuscatedEmail from '../components/ObfuscatedEmail.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Pfad mit führendem und abschließendem Slash, z. B. "/leistungen/" */
+  path?: string;
+  ogImage?: string;
+  /** Dunkler Header über dunklem Hero? */
+  heroDark?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  ogImage = '/og-default.png',
+  heroDark = false,
+} = Astro.props;
+
+const live = import.meta.env.PUBLIC_SITE_LIVE === 'true';
+
+const canonical = new URL(path, site.url).href;
+const ogImageUrl = new URL(ogImage, site.url).href;
+
+// Breadcrumb-Pfad aus dem URL-Pfad ableiten (saubere Verzeichnis-URLs mit Slash)
+const crumbLabels: Record<string, string> = {
+  leistungen: 'Leistungen',
+  referenzen: 'Referenzen',
+  'ueber-uns': 'Über uns',
+  kontakt: 'Kontakt',
+  seo: 'SEO',
+  'wordpress-agentur': 'WordPress Agentur',
+  'seo-consultant': 'SEO Consulting',
+  agb: 'AGB',
+  datenschutz: 'Datenschutz',
+  impressum: 'Impressum',
+};
+const segments = path.split('/').filter(Boolean);
+const breadcrumb = segments.length
+  ? {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Start', item: site.url + '/' },
+        ...segments.map((seg, i) => ({
+          '@type': 'ListItem',
+          position: i + 2,
+          name: crumbLabels[seg] ?? seg.replace(/-/g, ' '),
+          item: new URL(segments.slice(0, i + 1).join('/') + '/', site.url).href,
+        })),
+      ],
+    }
+  : null;
+
+// Strukturierte Daten als @graph: Firma (ProfessionalService = LocalBusiness-Subtyp,
+// echte Adresse) + WebSite, auf Unterseiten zusätzlich BreadcrumbList.
+// Bewusst KEIN aggregateRating/review – nur belegbare Daten ins Schema.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': site.url + '/#organization',
+      name: site.name,
+      description,
+      url: site.url,
+      telephone: site.phone,
+      image: ogImageUrl,
+      priceRange: '€€',
+      founder: { '@type': 'Person', name: site.owner },
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: site.street,
+        postalCode: site.postalCode,
+        addressLocality: site.city,
+        addressCountry: 'AT',
+      },
+      openingHours: 'Mo-Fr 09:00-17:00',
+      areaServed: ['Österreich', 'Deutschland', 'Schweiz', 'DACH'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': site.url + '/#website',
+      url: site.url,
+      name: site.name,
+      inLanguage: 'de',
+      publisher: { '@id': site.url + '/#organization' },
+    },
+    ...(breadcrumb ? [breadcrumb] : []),
+  ],
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {!live && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="canonical" href={canonical} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <meta name="theme-color" content="#5333ED" />
+    {live && <link rel="sitemap" href="/sitemap-index.xml" />}
+    <ClientRouter />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader__inner">
+        <span class="loader__mark">CodeRocker</span>
+        <span class="loader__bar"><i></i></span>
+      </div>
+    </div>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+    <div class="fx-scrim" aria-hidden="true" transition:persist></div>
+    <div class="fx-grain" aria-hidden="true" transition:persist></div>
+    <div class="scroll-progress" aria-hidden="true" transition:persist><span></span></div>
+
+    <!-- Full-Screen Projektanfrage-Popup (Inhalt folgt: externes Formular) -->
+    <div class="form-modal" id="form-modal" role="dialog" aria-modal="true" aria-labelledby="form-modal-title" hidden transition:persist>
+      <div class="form-modal__backdrop" data-close-form></div>
+      <div class="form-modal__panel">
+        <button class="form-modal__close" type="button" aria-label="Schließen" data-close-form>✕</button>
+        <div class="form-modal__inner">
+          <p class="kicker">projektanfrage</p>
+          <h2 id="form-modal-title">Erzählen Sie uns von Ihrem Projekt</h2>
+          <p>Schreiben Sie uns einfach eine kurze Nachricht zu Ihrem Vorhaben – wir melden uns zeitnah mit den nächsten Schritten. Das Erstgespräch ist kostenlos und unverbindlich.</p>
+          <ObfuscatedEmail class="form-modal__mail"> <span class="arrow" aria-hidden="true">→</span></ObfuscatedEmail>
+        </div>
+      </div>
+    </div>
+
+    <Header heroDark={heroDark} transition:persist="site-header" />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer transition:persist="site-footer" />
+
+    <script>
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const fine = window.matchMedia('(pointer: fine)').matches;
+
+      /* ============ PERSISTENTE FX (laufen einmal pro Session) ============ */
+      function initPersistentFX() {
+        if ((window as any).__crFX) return;
+        (window as any).__crFX = true;
+
+        // Scroll-Fortschritt
+        const bar = document.querySelector<HTMLElement>('.scroll-progress > span');
+        const onScroll = () => {
+          const h = document.documentElement;
+          const max = h.scrollHeight - h.clientHeight;
+          if (bar) bar.style.setProperty('--p', (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%');
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Full-Screen-Projektanfrage-Popup
+        const modal = document.getElementById('form-modal');
+        if (modal) {
+          let lastFocus: HTMLElement | null = null;
+          const openModal = () => {
+            lastFocus = document.activeElement as HTMLElement;
+            modal.hidden = false;
+            requestAnimationFrame(() => modal.classList.add('is-open'));
+            document.body.classList.add('modal-open');
+            (modal.querySelector('.form-modal__close') as HTMLElement | null)?.focus();
+          };
+          const closeModal = () => {
+            modal.classList.remove('is-open');
+            document.body.classList.remove('modal-open');
+            setTimeout(() => { modal.hidden = true; }, 400);
+            lastFocus?.focus();
+          };
+          // Öffnen (Capture-Phase, damit der ClientRouter den <a>-Klick nicht abfängt)
+          document.addEventListener('click', (e) => {
+            const target = e.target as Element;
+            const opener = target.closest('[data-open-form]');
+            if (opener) { e.preventDefault(); e.stopPropagation(); openModal(); return; }
+            if (target.closest('[data-close-form]')) { e.preventDefault(); e.stopPropagation(); closeModal(); }
+          }, true);
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+          });
+        }
+
+      }
+
+      /* ============ SEITEN-FX (laufen bei jedem astro:page-load) ============ */
+      function initPageFX() {
+        // Scroll-Reveal
+        const els = document.querySelectorAll('[data-reveal]:not(.is-visible)');
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+        } else {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+          }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+          els.forEach((el) => io.observe(el));
+        }
+
+        // Parallax
+        const px = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
+        if (px.length && !reduceMotion) {
+          const onP = () => px.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            const speed = parseFloat(el.dataset.parallax || '0.15');
+            const off = (r.top + r.height / 2 - innerHeight / 2) * -speed;
+            el.style.setProperty('--py', off.toFixed(1) + 'px');
+          });
+          onP();
+          window.addEventListener('scroll', onP, { passive: true });
+        }
+
+        // 3D-Scroll-Tilt (cross-browser, ohne scroll-driven CSS) – richtet das Element
+        // beim Hochscrollen aus der leichten Rücklage auf.
+        const tl = Array.from(document.querySelectorAll<HTMLElement>('[data-scroll-tilt]'));
+        if (tl.length && !reduceMotion) {
+          const onT = () => tl.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            const max = parseFloat(el.dataset.scrollTilt || '16');
+            // Mitte des Elements relativ zur Viewport-Höhe (0 = oben, 1 = unten)
+            const p = (r.top + r.height / 2) / innerHeight;
+            // Unterhalb der Mitte => Rücklage; in/oberhalb der Mitte => aufgerichtet
+            const deg = Math.max(0, Math.min(max, (p - 0.5) * 2 * max));
+            el.style.setProperty('--tiltX', deg.toFixed(2) + 'deg');
+          });
+          onT();
+          window.addEventListener('scroll', onT, { passive: true });
+          window.addEventListener('resize', onT, { passive: true });
+        }
+
+        if (!reduceMotion && fine) {
+          // 3D-Tilt
+          document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+            if ((el as any).__tilt) return; (el as any).__tilt = true;
+            const max = 9;
+            el.addEventListener('pointermove', (e) => {
+              const r = el.getBoundingClientRect();
+              el.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * max).toFixed(2) + 'deg');
+              el.style.setProperty('--rx', ((-((e.clientY - r.top) / r.height - 0.5)) * max).toFixed(2) + 'deg');
+            });
+            el.addEventListener('pointerleave', () => { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+          });
+          // Magnetische Buttons
+          document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
+            if ((el as any).__mag) return; (el as any).__mag = true;
+            el.addEventListener('pointermove', (e) => {
+              const r = el.getBoundingClientRect();
+              el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.35}px, ${(e.clientY - r.top - r.height / 2) * 0.35}px)`;
+            });
+            el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+          });
+        }
+
+        // Count-up
+        const counts = document.querySelectorAll<HTMLElement>('[data-count]');
+        if (counts.length) {
+          const run = (el: HTMLElement) => {
+            const target = parseFloat(el.dataset.count || '0');
+            const dec = parseInt(el.dataset.decimals || '0', 10);
+            if (reduceMotion) { el.textContent = target.toFixed(dec); return; }
+            const dur = 1400, s = performance.now();
+            const step = (now: number) => {
+              const t = Math.min((now - s) / dur, 1);
+              el.textContent = (target * (1 - Math.pow(1 - t, 3))).toFixed(dec);
+              if (t < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          };
+          const io2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { run(e.target as HTMLElement); io2.unobserve(e.target); } }), { threshold: 0.5 });
+          counts.forEach((c) => io2.observe(c));
+        }
+      }
+
+      // Intro-Loader: einmal pro Session
+      function initLoader() {
+        const loader = document.getElementById('loader');
+        if (!loader) return;
+        const finish = () => { loader.classList.add('done'); setTimeout(() => loader.remove(), 950); };
+        if (reduceMotion || sessionStorage.getItem('cr_intro')) { loader.remove(); }
+        else { sessionStorage.setItem('cr_intro', '1'); window.addEventListener('load', () => setTimeout(finish, 1100)); setTimeout(finish, 2600); }
+      }
+
+      const boot = () => { initPersistentFX(); initPageFX(); };
+      initLoader();
+      boot(); // initialer Load (Script liegt am Body-Ende → DOM ist da)
+      // Nach View-Transition: neuer Seiteninhalt → Seiten-FX erneut initialisieren
+      document.addEventListener('astro:after-swap', () => { initLoader(); boot(); });
+    </script>
+  </body>
+</html>

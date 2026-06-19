@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import rankingsImg from '../../assets/images/seo-rankings.png';
+import keywordImg from '../../assets/images/keyword-tracking.png';
+
+const leistungen = [
+  'Optimierte HTML-Struktur',
+  'Umfassende Keyword-Recherche',
+  'Meta-Titel & -Beschreibungen',
+  'Lokales SEO (Google Business)',
+  'Technische OnPage-Optimierung',
+  'Ladezeit & Core Web Vitals',
+  'Content-Optimierung',
+  'Laufendes Ranking-Tracking',
+];
+
+const packages = [
+  { name: 'SEO Basic', price: 'inklusive', desc: 'Bei jedem Webdesign-Projekt standardmäßig dabei – Ihre Seite startet bereits suchmaschinenoptimiert.', features: ['SEO-konforme Struktur', 'Meta-Daten', 'Sitemap & Indexierung', 'Mobile Optimierung'] },
+  { name: 'SEO Plus', price: 'ab 999 €', desc: 'Einmalige, tiefgehende Optimierung Ihrer bestehenden Webseite.', features: ['Keyword-Recherche', 'OnPage-Optimierung', 'Technisches SEO-Audit', 'Lokales SEO-Setup'], featured: true },
+  { name: 'SEO Betreuung', price: 'ab 899 €/Monat', desc: 'Laufende Optimierung & Beratung. Mindestlaufzeit 4 Monate.', features: ['Monatliches Reporting', 'Ranking-Tracking', 'Laufende Anpassungen', 'Strategische Beratung'] },
+];
+---
+
+<BaseLayout
+  title="SEO – wir steigern Ihre Sichtbarkeit 🚀 » CodeRocker"
+  description="Über 11 Jahre Erfahrung in der Suchmaschinenoptimierung: Werden Sie bei Google besser gefunden und erreichen Sie Ihre Zielgruppe. SEO mit messbaren Erfolgen."
+  path="/leistungen/seo/"
+  ogImage="/og-default.png"
+>
+  <PageHero
+    eyebrow="leistungen / seo"
+    title='SEO – wir erhöhen Ihre <span class="grad-text">Sichtbarkeit</span>'
+    lead="Über 11 Jahre Erfahrung in der Suchmaschinenoptimierung. Wir bringen Ihre Webseite bei Google nach vorne – damit Ihre Zielgruppe Sie findet, nicht den Wettbewerb."
+  >
+    <div class="hero-actions">
+      <a href="/kontakt/" class="btn btn--grad" data-open-form>SEO-Analyse anfragen <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container split">
+      <div data-reveal>
+        <p class="kicker">selbstverständlich</p>
+        <h2>Optimierung für Suchmaschinen gehört für uns dazu</h2>
+        <p class="lead">
+          Jede Webseite, die wir bauen, wird standardmäßig für Suchmaschinen optimiert.
+          Darüber hinaus bieten wir lokales SEO und umfassende Maßnahmen, mit denen Sie
+          dauerhaft mehr qualifizierte Besucher und Anfragen gewinnen.
+        </p>
+        <ul class="check-list two-col">
+          {leistungen.map((l) => <li>{l}</li>)}
+        </ul>
+      </div>
+      <figure class="rank-figure" data-reveal>
+        <Image src={rankingsImg} alt="Verbesserte SEO-Rankings bei Google" width={520} height={74} />
+        <Image src={keywordImg} alt="Keyword-Positionen im Tracking" width={520} height={363} />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--tint section--center">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">transparenz</p>
+        <h2>Wir messen Erfolge</h2>
+        <p class="lead">SEO ist kein Blindflug. Sie bekommen nachvollziehbare Reportings und sehen schwarz auf weiß, wie sich Ihre Rankings entwickeln.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section--center">
+        <p class="kicker">pakete</p>
+        <h2>SEO Preise &amp; Pakete</h2>
+      </div>
+      <div class="grid grid--3 price-grid">
+        {packages.map((p) => (
+          <div class:list={['price-card', { featured: p.featured }]} data-reveal>
+            {p.featured && <span class="badge">Empfohlen</span>}
+            <h3>{p.name}</h3>
+            <p class="price">{p.price}</p>
+            <p class="price-desc">{p.desc}</p>
+            <ul class="check-list">
+              {p.features.map((f) => <li>{f}</li>)}
+            </ul>
+            <a href="/kontakt/" class:list={['btn', p.featured ? 'btn--grad' : 'btn--ghost']}>Anfragen</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Bereit, bei Google sichtbar zu werden?</h2>
+      <p class="lead">Lassen Sie uns Ihre aktuelle Sichtbarkeit prüfen – kostenlos und unverbindlich.</p>
+      <a href="/kontakt/" class="btn btn--grad" data-open-form>Jetzt SEO-Analyse anfragen <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-actions { margin-top: 2rem; }
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+
+  .split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .check-list { list-style: none; margin: 1.25rem 0 0; padding: 0; }
+  .check-list.two-col { columns: 2; column-gap: 1.5rem; }
+  .check-list li { position: relative; padding-left: 1.9rem; margin-bottom: 0.75rem; break-inside: avoid; }
+  .check-list li::before {
+    content: '✓'; position: absolute; left: 0; top: 0;
+    color: #fff; background: var(--grad); width: 1.3rem; height: 1.3rem;
+    border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;
+  }
+  .rank-figure { display: flex; flex-direction: column; gap: 1rem; margin: 0; }
+  .rank-figure :global(img) { width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--line); }
+
+  .price-grid { align-items: stretch; }
+  .price-card {
+    position: relative; background: var(--surface-glass); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 2rem 1.75rem; display: flex; flex-direction: column;
+    backdrop-filter: blur(6px);
+  }
+  .price-card.featured { border-color: var(--brand); box-shadow: var(--shadow-brand); }
+  .badge {
+    position: absolute; top: -0.75rem; left: 1.75rem;
+    background: var(--grad); color: #fff; font-family: var(--font-mono);
+    font-size: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 999px;
+  }
+  .price { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; color: var(--ink); margin: 0.5rem 0 0.75rem; }
+  .price-desc { font-size: 0.95rem; }
+  .price-card .check-list { flex: 1; margin-bottom: 1.5rem; }
+  .price-card .check-list li { font-size: 0.93rem; }
+
+  @media (max-width: 820px) {
+    .split { grid-template-columns: 1fr; }
+    .check-list.two-col { columns: 1; }
+  }
+</style>

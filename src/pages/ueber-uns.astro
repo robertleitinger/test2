@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ObfuscatedEmail from '../components/ObfuscatedEmail.astro';
+import { site } from '../data/site';
+
+import robert from '../assets/images/robert-about.jpg';
+import andrea from '../assets/images/andrea.jpg';
+import sebastian from '../assets/images/sebastian.jpg';
+
+import office1 from '../assets/images/office-1.jpg';
+import office2 from '../assets/images/office-2.jpg';
+import office3 from '../assets/images/office-3.jpg';
+import office4 from '../assets/images/office-4.jpg';
+import office5 from '../assets/images/office-5.jpg';
+
+const team = [
+  { img: robert, name: 'Robert', role: 'Marketing & SEO' },
+  { img: andrea, name: 'Andrea', role: 'Organisation & Akquise' },
+  { img: sebastian, name: 'Sebastian', role: 'Imagefilm', note: '(extern · remote)' },
+];
+
+const office = [office1, office2, office3, office4, office5];
+---
+
+<BaseLayout
+  title="Über uns » CodeRocker"
+  description="Lernen Sie das Team, die Philosophie und die Vision von CodeRocker kennen – Ihrer Webdesign- und SEO-Agentur aus Hallein bei Salzburg."
+  path="/ueber-uns/"
+>
+  <PageHero
+    eyebrow="über uns"
+    title='Wir lieben, was wir <span class="grad-text">tun</span>'
+    lead="Wir haben es uns zur Aufgabe gemacht, Unternehmen mit gezielten Online-Marketing-Lösungen nach vorne zu bringen – ehrlich, respektvoll und langfristig."
+  />
+
+  <!-- PHILOSOPHIE -->
+  <section class="section">
+    <div class="container philo">
+      <p class="kicker">unsere philosophie</p>
+      <p class="philo-text">
+        Wir lieben was wir tun und haben es uns zur Aufgabe gemacht, andere Unternehmen mit
+        unseren gezielten Online-Marketing-Lösungen nach vorne zu bringen. Dabei ist uns vor allem
+        ein guter Umgang und gegenseitiger Respekt wichtig – denn aus vielen Kundenprojekten
+        entstehen langfristige Partnerschaften. Wir sehen uns deshalb weniger als einmaliger
+        Dienstleister, sondern betreuen Kunden meist über einen langen Zeitraum.
+      </p>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head section--center">
+        <p class="kicker">das team</p>
+        <h2>Die Menschen hinter CodeRocker</h2>
+      </div>
+      <div class="grid grid--3 team-grid">
+        {team.map((m) => (
+          <div class="team-card" data-reveal data-tilt>
+            <div class="team-photo">
+              <Image src={m.img} alt={m.name} width={560} height={700} quality={85} />
+            </div>
+            <h3>{m.name}</h3>
+            <p class="team-role">{m.role}</p>
+            {m.note && <p class="team-note">{m.note}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICE -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">impressionen</p>
+        <h2>Unser Office</h2>
+      </div>
+      <div class="office-gallery">
+        {office.map((o, i) => (
+          <figure class:list={['office-item', { wide: i === 0 }]} data-reveal>
+            <Image src={o} alt="Impression aus dem CodeRocker Office" width={820} height={547} quality={82} />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- REGION / KONTAKT -->
+  <section class="section section--ink">
+    <div class="container region-grid">
+      <div data-reveal>
+        <p class="kicker">zusammenarbeit</p>
+        <h2>Für Sie da – im gesamten deutschsprachigen Raum</h2>
+        <p class="lead">
+          Wir betreuen Kunden in ganz Österreich, Deutschland und der Schweiz – ortsunabhängig
+          und unkompliziert per Video-Call, Telefon und E-Mail. So arbeiten wir genauso eng
+          zusammen, als säßen wir im selben Raum. Persönliche Termine im Office sind nach
+          Vereinbarung jederzeit möglich.
+        </p>
+        <a href="/kontakt/" class="btn btn--grad" data-open-form>Kontakt aufnehmen <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <address class="region-contact" data-reveal>
+        <p class="kicker">kontakt</p>
+        {site.street}<br />
+        {site.postalCode} {site.city}, {site.country}<br /><br />
+        <ObfuscatedEmail /><br />
+        <span class="muted">{site.hours}</span>
+      </address>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .philo { max-width: 56rem; }
+  .philo-text {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 2.1rem); line-height: 1.4; color: var(--ink);
+    margin: 0;
+  }
+
+  .team-grid { max-width: 880px; margin-inline: auto; }
+  .team-card { text-align: center; }
+  .team-photo { border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; aspect-ratio: 4 / 5; }
+  .team-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .team-card h3 { margin: 0; }
+  .team-role { font-family: var(--font-mono); font-size: 0.85rem; color: var(--ink-faint); margin: 0.25rem 0 0; }
+  .team-note { font-size: 0.8rem; color: var(--ink-faint); margin: 0.2rem 0 0; }
+
+  .office-gallery {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  }
+  .office-item { margin: 0; border-radius: var(--radius-sm); overflow: hidden; aspect-ratio: 3 / 2; }
+  .office-item.wide { grid-column: span 2; grid-row: span 2; }
+  .office-item :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  .region-grid { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .region-grid .lead { color: #fff; }
+  .region-contact { font-style: normal; font-size: 1.05rem; line-height: 1.9; }
+  .region-contact a { color: #fff; }
+  .muted { color: var(--ink-faint); }
+
+  @media (max-width: 820px) {
+    .office-gallery { grid-template-columns: repeat(2, 1fr); }
+    .office-item.wide { grid-column: span 2; grid-row: auto; }
+    .region-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,254 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Advantages from '../components/Advantages.astro';
+import { site } from '../data/site';
+
+import focusShot from '../assets/images/ref/adlerblick.png';
+import refEase from '../assets/images/ref/the-ease.png';
+import refBuergel from '../assets/images/ref/dr-buergel.png';
+import refPhysio from '../assets/images/ref/physiotherapie.png';
+
+const refs = [
+  { img: refEase, name: 'THE EASE – Chiropraktik', tag: 'Webdesign · Onepager' },
+  { img: refPhysio, name: 'Physiotherapie Salzburg', tag: 'Webdesign · Praxis' },
+  { img: refBuergel, name: 'Hausarzt Dr. Bürgel', tag: 'Webdesign · Arztpraxis' },
+];
+---
+
+<BaseLayout
+  title="Webdesign & Online Marketing das rockt 🚀 » CodeRocker"
+  description="Wir erstellen schnelle, technisch perfekte Webseiten, die mehr Kunden bringen – individuelles Webdesign & Redesign zum Festpreis für den gesamten DACH-Raum."
+  path="/"
+  heroDark={true}
+>
+  <!-- HERO -->
+  <section class="hero section--ink">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <h1 class="hero-title">
+        <span class="line">
+          <span class="reveal-word" style="animation-delay:.05s">Webdesign</span>
+          <span class="reveal-word" style="animation-delay:.12s">und</span>
+          <br class="br-m" />
+          <span class="reveal-word" style="animation-delay:.19s">Online</span>
+        </span>
+        <span class="line">
+          <span class="reveal-word" style="animation-delay:.28s">Marketing</span>
+          <br class="br-m" />
+          <span class="reveal-word" style="animation-delay:.35s">das</span>
+          <span class="reveal-word shimmer" style="animation-delay:.42s">rockt!</span>
+        </span>
+      </h1>
+      <p class="lead hero-lead">Erreichen Sie mehr Kunden und steigern Sie Ihren Umsatz!</p>
+      <div class="hero-cta">
+        <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projekt starten <span class="arrow" aria-hidden="true">→</span></button>
+        <a href="/referenzen/" class="btn btn--ghost" data-magnetic>Referenzen ansehen</a>
+      </div>
+      <div class="hero-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-value">{site.rating} / 5,0</span>
+        <span class="rating-label">Top bewertet von unseren Kunden</span>
+      </div>
+    </div>
+    <a class="hero-scroll" href="#weiter" aria-label="Zum Inhalt scrollen"><span></span>scroll</a>
+  </section>
+
+  <!-- KINETIC TYPE -->
+  <div class="kinetic" aria-hidden="true">
+    <div class="kinetic__track">
+      {Array.from({ length: 2 }).map(() => (
+        <>
+          <span class="fill">Webseiten</span><span class="dot">✦</span>
+          <span>Redesign</span><span class="dot">✦</span>
+          <span class="fill">SEO</span><span class="dot">✦</span>
+          <span>KI-Sichtbarkeit</span><span class="dot">✦</span>
+          <span class="fill">Landingpages</span><span class="dot">✦</span>
+          <span>Online Marketing</span><span class="dot">✦</span>
+        </>
+      ))}
+    </div>
+  </div>
+
+
+  <!-- FOKUS: WEBSEITEN-ERSTELLUNG -->
+  <section class="section" id="weiter">
+    <div class="container split">
+      <div data-reveal="left">
+        <p class="kicker">das machen wir</p>
+        <h2>Wir bauen Webseiten,<br />die <span class="grad-text">verkaufen</span>.</h2>
+        <p class="lead">
+          Ob komplett neu oder als Redesign Ihrer bestehenden Seite: Wir erstellen
+          maßgeschneiderte Webseiten, die modern aussehen, blitzschnell laden und
+          gezielt zu mehr Anfragen führen – mit modernster Technik sauber umgesetzt.
+        </p>
+        <ul class="check-list">
+          <li>Maßgeschneidertes Webdesign &amp; Redesign – kein Baukasten</li>
+          <li>Gestochen scharf auf Smartphone, Tablet &amp; Desktop</li>
+          <li>Schnelle Ladezeit – optimiert für Google und KI-Systeme</li>
+        </ul>
+        <a href="/leistungen/" class="btn btn--grad" data-magnetic>Unsere Leistungen <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <figure class="split-figure" data-reveal="right" data-tilt>
+        <Image src={focusShot} alt="Adlerblick Onlineshop – eine von CodeRocker erstellte Webseite" width={900} height={630} quality={86} />
+      </figure>
+    </div>
+  </section>
+
+  <!-- VORTEILE -->
+  <Advantages
+    kicker="warum coderocker"
+    heading={'Mehr als „nur schön“'}
+    lead="Eine gute Webseite ist eine Investition mit Rendite – technisch perfekt gebaut, damit sie für Sie arbeitet."
+  />
+
+  <!-- REFERENZEN-TEASER -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head split-head">
+        <div>
+          <p class="kicker">referenzen</p>
+          <h2>Ausgewählte Projekte</h2>
+        </div>
+        <a href="/referenzen/" class="btn btn--ghost" data-magnetic>Alle Referenzen <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="grid grid--3">
+        {refs.map((r) => (
+          <figure class="ref-card" data-reveal data-tilt>
+            <div class="ref-media"><Image src={r.img} alt={r.name} width={760} height={532} quality={82} /></div>
+            <figcaption><h3>{r.name}</h3><p class="ref-tag">{r.tag}</p></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="section section--tint section--center">
+    <div class="container testimonial">
+      <p class="stars testimonial-stars">★★★★★</p>
+      <blockquote>
+        „Ich bin mit der Arbeit von Robert Leitinger von CodeRocker hochzufrieden. Die Praxis­homepage
+        ist rundum gelungen. Die Arbeit ist hochprofessionell und kundenorientiert.“
+      </blockquote>
+      <cite>— Dr. Georg Bürgel, Hausarzt</cite>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Bereit für eine Webseite, die rockt?</h2>
+      <p class="lead">Erzählen Sie uns von Ihrem Projekt – das Erstgespräch ist kostenlos und unverbindlich.</p>
+      <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projekt starten <span class="arrow" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero { padding-block: clamp(8rem, 16vw, 13rem) clamp(4rem, 9vw, 7rem); min-height: min(100svh, 1120px); display: flex; align-items: center; }
+  .hero.section--ink { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .hero .container { position: relative; z-index: 2; }
+
+  /* Hero-Effekt: feines, langsam scrollendes Tech-Grid, zum Rand ausgeblendet */
+  .hero-grid {
+    /* startet unter dem 74px-Header, damit das Grid nicht in den Header läuft */
+    position: absolute; top: 74px; left: 0; right: 0; bottom: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 62px 62px;
+    -webkit-mask-image: radial-gradient(125% 90% at 50% 0%, #000 28%, transparent 78%);
+    mask-image: radial-gradient(125% 90% at 50% 0%, #000 28%, transparent 78%);
+    animation: gridDrift 26s linear infinite;
+  }
+  @keyframes gridDrift { from { background-position: 0 0, 0 0; } to { background-position: 0 62px, 0 62px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-grid { animation: none; }
+  }
+  .hero-inner { max-width: var(--maxw); }
+  .hero-title {
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.6rem, 6.5vw, 5.1rem);
+    line-height: 1.05; letter-spacing: -0.032em; font-weight: 800;
+  }
+  /* padding-bottom + negativer margin: Maske bleibt, aber Unterlängen (g, y …) werden nicht abgeschnitten */
+  .hero-title .line { display: block; overflow: hidden; padding-bottom: 0.18em; margin-bottom: -0.18em; }
+  .hero-title .reveal-word { margin-right: 0.2em; }
+  .hero-title .line .reveal-word:last-child { margin-right: 0; }
+  .br-m { display: none; }
+  .hero-lead {
+    color: #fff; font-weight: 500; margin-bottom: 2rem;
+    font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+    line-height: 1.4; max-width: 68rem;
+  }
+  /* Slogan am Desktop garantiert auf 2 ausgefüllte Zeilen halten */
+  @media (min-width: 821px) {
+    .hero-title .line { white-space: nowrap; }
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
+  .hero-rating { display: flex; align-items: center; gap: 0.6rem 0.9rem; flex-wrap: wrap; }
+  .hero-rating .stars { font-size: 1.3rem; line-height: 1; color: var(--gold); letter-spacing: 1.5px; }
+  .hero-rating .rating-value { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; }
+  .hero-rating .rating-label { font-size: 0.95rem; color: var(--ink-soft); }
+  .hero-scroll {
+    position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint);
+  }
+  .hero-scroll span { width: 1px; height: 38px; background: linear-gradient(var(--magenta), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
+  /* Sprungziel des Scrollhinweis – Offset für den fixierten Header */
+  #weiter { scroll-margin-top: 88px; }
+
+  /* SPLIT (Fokus) */
+  .split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .split h2 { font-size: clamp(2rem, 4.5vw, 3.4rem); }
+  .split .lead { color: var(--ink-soft); }
+  /* Freigestelltes Mockup ohne Rahmen – nur weicher Schlagschatten */
+  .split-figure { margin: 0; }
+  .split-figure :global(img) { width: 100%; height: auto; display: block; object-fit: contain; filter: drop-shadow(0 26px 40px rgba(0,0,0,0.55)); }
+  .check-list { list-style: none; margin: 0 0 1.75rem; padding: 0; }
+  .check-list li { position: relative; padding-left: 1.9rem; margin-bottom: 0.7rem; }
+  .check-list li::before { content: '✓'; position: absolute; left: 0; top: 0; color: #fff; background: var(--grad); width: 1.3rem; height: 1.3rem; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem; }
+
+  /* VORTEILE */
+
+  /* REFERENZEN-TEASER (Premium-Box mit gepolstertem Mockup) */
+  .ref-card { margin: 0; display: flex; flex-direction: column; background: linear-gradient(155deg, #242029 0%, #19161f 52%, #241c18 100%); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+  .ref-card:hover { transform: translateY(-6px); box-shadow: 0 40px 80px -40px rgba(0,0,0,0.85), var(--glow); border-color: var(--line-strong); }
+  .ref-media { line-height: 0; }
+  .ref-media :global(img) { width: 100%; height: auto; display: block; object-fit: contain; filter: drop-shadow(0 22px 30px rgba(0,0,0,0.55)); transition: transform 0.5s ease; }
+  .ref-card:hover .ref-media :global(img) { transform: scale(1.03) translateY(-2px); }
+  .ref-card figcaption { padding-top: 1.2rem; }
+  .ref-card h3 { font-size: 1.15rem; margin: 0 0 0.25rem; }
+  .ref-tag { font-family: var(--font-mono); font-size: 0.78rem; color: #fff; margin: 0; }
+
+  .split-head { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; max-width: none; }
+
+  /* TESTIMONIAL */
+  .testimonial { max-width: 48rem; margin-inline: auto; text-align: center; }
+  .testimonial-stars { font-size: 1.4rem; margin-bottom: 1rem; }
+  .testimonial blockquote { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 3vw, 1.9rem); line-height: 1.4; color: #fff; margin: 0 0 1.25rem; }
+  .testimonial cite { color: var(--ink-soft); font-style: normal; font-weight: 500; }
+
+  /* CTA */
+  .cta-band h2 { margin-bottom: 0.75rem; }
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+
+  @media (max-width: 820px) {
+    .split { grid-template-columns: 1fr; }
+    /* Mehr Luft über der H1 auf Mobile */
+    .hero { min-height: auto; padding-top: 10.5rem; }
+    .hero-title { font-size: clamp(2.3rem, 9.5vw, 3.2rem); line-height: 1.07; }
+    .hero-title .line { display: inline; overflow: visible; }
+    .br-m { display: inline; }
+    /* Lead minimal größer als zuvor */
+    .hero-lead { font-size: 1.1rem; }
+    /* Scrollhinweis weiter nach unten */
+    .hero-scroll { bottom: 0.5rem; }
+    /* Wort-Band ("Slider") auf Mobile ausblenden */
+    .kinetic { display: none; }
+  }
+</style>

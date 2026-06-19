@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { projekte } from '../data/projekte';
+
+const mockups = import.meta.glob<{ default: ImageMetadata }>('../assets/images/projekte/*.png', { eager: true });
+const getMockup = (slug: string) => mockups[`../assets/images/projekte/${slug}.png`]?.default;
+---
+
+<BaseLayout
+  title="Referenzen & Projekte » CodeRocker"
+  description="Spannende Projekte und glückliche Kunden ᐅ Ein Auszug aus unseren Referenzen und unserem Webdesign-Portfolio für Kunden im gesamten DACH-Raum."
+  path="/referenzen/"
+>
+  <PageHero
+    eyebrow="referenzen"
+    title='Großartige Projekte, großartige <span class="grad-text">Kunden</span>'
+    lead="Webseiten, die wir für Unternehmen aus den unterschiedlichsten Branchen umgesetzt haben – modern, schnell und auf Wirkung gebaut."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">portfolio</p>
+        <h2>Ein Auszug aus unseren Referenzen</h2>
+      </div>
+      <div class="ref-grid">
+        {projekte.map((p) => {
+          const img = getMockup(p.slug);
+          return (
+            <a class="ref-card" href={`/referenzen/${p.slug}/`} data-reveal data-tilt>
+              <div class="ref-media">
+                {img && <Image src={img} alt={p.name} width={1000} height={700} quality={86} />}
+              </div>
+              <div class="ref-caption">
+                <h3>{p.name}</h3>
+                <p class="ref-tag">{p.tag}</p>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Wird Ihr Projekt das nächste?</h2>
+      <p class="lead">Erzählen Sie uns davon – wir freuen uns darauf, gemeinsam etwas Großartiges zu bauen.</p>
+      <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projekt starten <span class="arrow" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ref-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.25rem; }
+  .ref-card {
+    margin: 0; display: flex; flex-direction: column;
+    color: var(--ink-2); text-decoration: none;
+    background: linear-gradient(155deg, #242029 0%, #19161f 52%, #241c18 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 2.6vw, 2.5rem);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .ref-card:hover {
+    text-decoration: none;
+    transform: translateY(-6px);
+    border-color: var(--line-strong);
+    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.85), var(--glow);
+  }
+  /* Freigestelltes Geräte-Mockup – vollständig sichtbar, transparent, weicher Schatten */
+  .ref-media { line-height: 0; }
+  .ref-media :global(img) {
+    width: 100%; height: auto; display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.55));
+    transition: transform 0.5s ease;
+  }
+  .ref-card:hover .ref-media :global(img) { transform: scale(1.03) translateY(-2px); }
+  .ref-caption { padding-top: 1.5rem; }
+  .ref-card h3 { margin: 0 0 0.3rem; font-size: clamp(1.2rem, 2vw, 1.45rem); }
+  .ref-tag { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: #fff; margin: 0; }
+
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+
+  @media (max-width: 700px) { .ref-grid { grid-template-columns: 1fr; } }
+</style>
