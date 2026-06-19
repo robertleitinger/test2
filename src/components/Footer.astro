@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '../assets/images/logo-white.png';
+import ObfuscatedEmail from './ObfuscatedEmail.astro';
+import { site, footerLinks } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <Image src={logoWhite} alt={`${site.name} Logo`} width={170} height={38} />
+      <p class="footer-tag">Webdesign &amp; Online Marketing,<br />das Ihr Unternehmen nach vorne bringt.</p>
+      <p class="footer-rating"><span class="stars">★★★★★</span> {site.rating} / 5,0</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Kontakt</h3>
+      <address>
+        {site.city}, {site.country}<br />
+        <ObfuscatedEmail /><br />
+        <span class="muted">{site.hours}</span>
+      </address>
+      <p class="footer-anfrage"><button type="button" class="footer-link-btn" data-open-form>Projektanfrage →</button></p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Navigation</h3>
+      <ul>
+        {footerLinks.navigation.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Weitere Leistungen</h3>
+      <ul>
+        {footerLinks.weitere.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Information</h3>
+      <ul>
+        {footerLinks.information.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-regions">
+    <span class="footer-regions-label">Regionen</span>
+    <ul>
+      {footerLinks.regionen.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} coderocker.at · {site.owner}</p>
+    <p class="footer-region">Webdesign &amp; SEO · gesamter DACH-Raum</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg-deep);
+    color: var(--ink-soft);
+    padding-top: clamp(3rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--grad);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1.1fr 0.8fr 1fr 0.8fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+  }
+  .footer-brand :global(img) { width: 170px; height: auto; margin-bottom: 1.1rem; }
+  .footer-tag { font-size: 0.95rem; line-height: 1.6; }
+  .footer-rating { font-size: 0.9rem; margin: 0; }
+  .footer-col h3 {
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; margin: 0; padding: 0; }
+  .footer-col li { margin-bottom: 0.55rem; font-size: 0.95rem; }
+  .footer-col a { color: var(--ink-soft); text-decoration: none; transition: color 0.15s ease; }
+  .footer-col a:hover { color: #fff; }
+  address { font-style: normal; font-size: 0.95rem; line-height: 1.9; }
+  .footer-anfrage { margin: 0.5rem 0 0; }
+  .footer-link-btn { background: none; border: 0; padding: 0; cursor: pointer; color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; }
+  .footer-link-btn:hover { color: #fff; }
+  .muted, .muted-list li { color: #fff; }
+  .footer-regions {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem 1rem;
+    border-top: 1px solid var(--line);
+    padding-block: 1.25rem;
+  }
+  .footer-regions-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; }
+  .footer-regions ul { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; list-style: none; margin: 0; padding: 0; }
+  .footer-regions a { color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; }
+  .footer-regions a:hover { color: #fff; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    padding-block: 1.5rem 2rem;
+    font-size: 0.85rem;
+    color: #fff;
+  }
+  .footer-bottom p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 540px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>

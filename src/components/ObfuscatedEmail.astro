@@ -1,0 +1,45 @@
+---
+// Verschleierte E-Mail-Adresse gegen Spam-Harvester.
+// Im statischen HTML steht KEIN Klartext und KEIN mailto: – nur ein
+// Base64-Wert. Ein winziges Script baut beim Laden den echten Link +
+// Text zusammen (Progressive Enhancement). Ohne JS bleibt eine
+// menschenlesbare, aber Regex-resistente Form sichtbar (z. B. fürs
+// rechtlich erforderliche Impressum).
+import { site } from '../data/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// Build-Zeit-Kodierung – landet so (unleserlich für Bots) im HTML.
+const encoded = Buffer.from(site.email).toString('base64');
+// Entschärfter Fallback-Text (kein @ / . → von E-Mail-Regex nicht erfasst).
+const display = site.email.replace('@', ' [at] ').replaceAll('.', ' [punkt] ');
+---
+
+<a class={className} data-eml={encoded}><span class="eml-text">{display}</span><slot /></a>
+
+<script>
+  function setupObfuscatedEmails() {
+    document.querySelectorAll('a[data-eml]').forEach((el) => {
+      const a = el as HTMLAnchorElement;
+      if (a.dataset.emlDone) return;
+      try {
+        const email = atob(a.dataset.eml || '');
+        if (!email) return;
+        a.setAttribute('href', 'mailto:' + email);
+        const text = a.querySelector('.eml-text');
+        if (text) text.textContent = email;
+        a.dataset.emlDone = '1';
+      } catch (_) {
+        /* ignorieren – Fallback-Text bleibt sichtbar */
+      }
+    });
+  }
+
+  setupObfuscatedEmails();
+  // Erneut nach Astro-View-Transitions (neu gerenderte Seiteninhalte).
+  document.addEventListener('astro:page-load', setupObfuscatedEmails);
+</script>

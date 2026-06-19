@@ -1,0 +1,211 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { projekte } from '../../data/projekte';
+
+export function getStaticPaths() {
+  return projekte.map((p) => ({ params: { slug: p.slug }, props: { projekt: p } }));
+}
+
+const { projekt } = Astro.props;
+
+// Bilder dynamisch auflösen (freigestelltes Mockup + Screenshot)
+const mockups = import.meta.glob<{ default: ImageMetadata }>('../../assets/images/projekte/*.png', { eager: true });
+const shots = import.meta.glob<{ default: ImageMetadata }>('../../assets/images/projekte/*.{jpg,png}', { eager: true });
+const mockup = mockups[`../../assets/images/projekte/${projekt.slug}.png`]?.default;
+const shotKey = `../../assets/images/projekte/${projekt.slug}-shot.${projekt.shotExt ?? 'jpg'}`;
+const shot = shots[shotKey]?.default;
+
+const host = projekt.url ? new URL(projekt.url).host.replace(/^www\./, '') : null;
+const description = projekt.text[0];
+
+// Cinematic-Layout für alle Projekte mit Screenshot (Standard-Layout als Fallback)
+const cinematic = !!shot;
+---
+
+<BaseLayout
+  title={`${projekt.name} » Referenzen » CodeRocker`}
+  description={description}
+  path={`/referenzen/${projekt.slug}/`}
+>
+  {cinematic ? (
+    <!-- ===== Cinematic-Layout: Screenshot-Hero oben ===== -->
+    <section class="case-hero section--ink">
+      <div class="container">
+        <div class="case-hero-head" data-reveal>
+          <p class="kicker">{projekt.tag}</p>
+          <h1>{projekt.name}</h1>
+          {description && <p class="lead case-hero-sub">{description}</p>}
+        </div>
+
+        {shot && (
+          <div class="browser-wrap" data-reveal="scale">
+            <div class="browser-frame" data-scroll-tilt="16">
+              <div class="browser-bar">
+                <span class="browser-dots"><i></i><i></i><i></i></span>
+                {host && <span class="browser-url">{host}</span>}
+              </div>
+              <div class="browser-screen">
+                <Image src={shot} alt={`Website von ${projekt.name}`} width={1600} height={848} quality={86} loading="eager" />
+                <span class="browser-sheen" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="case-grid case-grid--rev">
+          {mockup && (
+            <figure class="case-media" data-reveal="right" data-tilt>
+              <Image src={mockup} alt={`${projekt.name} – responsive auf Desktop & Smartphone`} width={1000} height={700} quality={86} />
+            </figure>
+          )}
+          <div class="case-text" data-reveal="left">
+            {projekt.text.map((p) => <p>{p}</p>)}
+            {projekt.url && (
+              <a class="btn btn--ghost case-visit" href={projekt.url} target="_blank" rel="noopener">
+                {host} ansehen <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
+        </div>
+        <p class="case-back" data-reveal><a href="/referenzen/">← Alle Referenzen ansehen</a></p>
+      </div>
+    </section>
+  ) : (
+    <!-- ===== Standard-Layout ===== -->
+    <Fragment>
+      <PageHero eyebrow={projekt.tag} title={projekt.name} />
+      <section class="section">
+        <div class="container">
+          <div class="case-grid">
+            {mockup && (
+              <figure class="case-media" data-reveal>
+                <Image src={mockup} alt={`${projekt.name} – Webdesign von CodeRocker`} width={1000} height={700} quality={86} />
+              </figure>
+            )}
+            <div class="case-text" data-reveal>
+              {projekt.text.map((p) => <p>{p}</p>)}
+              {projekt.url && (
+                <a class="btn btn--ghost case-visit" href={projekt.url} target="_blank" rel="noopener">
+                  {host} besuchen <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              )}
+            </div>
+          </div>
+
+          {shot && (
+            <figure class="case-shot" data-reveal>
+              <Image src={shot} alt={`Screenshot der Webseite ${projekt.name}`} width={1280} height={660} quality={82} />
+            </figure>
+          )}
+
+          <p class="case-back" data-reveal><a href="/referenzen/">← Alle Referenzen ansehen</a></p>
+        </div>
+      </section>
+    </Fragment>
+  )}
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Wird Ihr Projekt das nächste?</h2>
+      <p class="lead">Erzählen Sie uns davon – wir freuen uns darauf, gemeinsam etwas Großartiges zu bauen.</p>
+      <button type="button" class="btn btn--grad" data-open-form data-magnetic>Projekt starten <span class="arrow" aria-hidden="true">→</span></button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Standard-Layout ---------- */
+  .case-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .case-media { margin: 0; line-height: 0; }
+  .case-media :global(img) {
+    width: 100%; height: auto; display: block; object-fit: contain;
+    filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.55));
+  }
+  .case-text p { color: var(--ink-soft); margin: 0 0 1rem; }
+  .case-visit { margin-top: 0.75rem; }
+  .case-shot {
+    margin: clamp(2.5rem, 6vw, 4.5rem) 0 0; line-height: 0;
+    border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  }
+  .case-shot :global(img) { width: 100%; height: auto; display: block; }
+  .case-back { margin-top: 2.5rem; }
+  .case-back a { font-family: var(--font-display); font-weight: 600; color: #fff; }
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+
+  /* ---------- Cinematic-Layout ---------- */
+  .case-hero {
+    position: relative; overflow: hidden;
+    padding-block: clamp(5.5rem, 12vw, 8rem) clamp(3rem, 7vw, 5rem);
+  }
+  .case-hero .container { position: relative; z-index: 1; }
+  .case-hero-head { max-width: 60ch; }
+  .case-hero-head h1 { margin: 0.25rem 0 0; }
+  .case-hero-sub { color: var(--ink-soft); margin: 1.1rem 0 1.75rem; max-width: 52ch; }
+
+  /* Browser-Fensterrahmen */
+  .browser-wrap { margin-top: clamp(2.25rem, 5vw, 3.5rem); perspective: 1400px; perspective-origin: center 30%; }
+  .browser-frame {
+    transform-style: preserve-3d;
+    /* leichte Rücklage als Default (auch ohne JS sichtbar); JS richtet beim Scrollen auf */
+    transform: rotateX(var(--tiltX, 13deg));
+    transform-origin: center bottom;
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #14121b;
+    box-shadow: 0 50px 90px -40px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    will-change: transform;
+  }
+  .browser-bar {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding: 0.7rem 1rem; background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .browser-dots { display: inline-flex; gap: 0.45rem; flex: 0 0 auto; }
+  .browser-dots i { width: 0.72rem; height: 0.72rem; border-radius: 50%; background: #ff5f57; }
+  .browser-dots i:nth-child(2) { background: #febc2e; }
+  .browser-dots i:nth-child(3) { background: #28c840; }
+  .browser-url {
+    flex: 1; max-width: 360px; text-align: center;
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink-soft);
+    background: rgba(0, 0, 0, 0.35); border-radius: 999px; padding: 0.3rem 0.9rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .browser-screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+  .browser-screen :global(img) {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; object-position: top center;
+    transition: object-position 2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s ease;
+  }
+  /* Hover = sanftes „Durchscrollen" der Seite (reine CSS-Transition) */
+  .browser-frame:hover .browser-screen :global(img) { object-position: bottom center; }
+
+  /* Glanz-/Licht-Sweep über das Bild – läuft einmalig beim Einblenden (alle Browser) */
+  .browser-sheen {
+    position: absolute; top: 0; left: 0; width: 55%; height: 100%;
+    pointer-events: none; opacity: 0; mix-blend-mode: overlay;
+    transform: translateX(-130%) skewX(-18deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  }
+  .browser-wrap.is-visible .browser-sheen {
+    animation: browserSheen 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+  }
+  @keyframes browserSheen {
+    0% { opacity: 0; transform: translateX(-130%) skewX(-18deg); }
+    25% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(240%) skewX(-18deg); }
+  }
+
+  .case-grid--rev { margin-top: 0.5rem; }
+
+  @media (max-width: 820px) {
+    .case-grid { grid-template-columns: 1fr; }
+    .browser-screen { aspect-ratio: 4 / 3; }
+  }
+</style>

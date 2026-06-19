@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import wpImg from '../../assets/images/wordpress-cms.jpg';
+
+const leistungen = [
+  { t: 'WordPress Webdesign & SEO', d: 'Optimiertes WordPress-Webdesign zum Festpreis – inklusive Suchmaschinenoptimierung.' },
+  { t: 'WordPress Schulung', d: 'Wir zeigen Ihnen, wie Sie Ihre Seite selbst pflegen und erweitern – verständlich und praxisnah.' },
+  { t: 'Wartung & Sicherheit', d: 'Regelmäßige Backups, Updates aller Komponenten und Sicherheitschecks – damit Ihre Seite stabil läuft.' },
+  { t: 'WordPress Hilfe', d: 'Support und Troubleshooting, wenn es klemmt. Wir lösen technische Probleme schnell.' },
+];
+
+const vorteile = [
+  { t: 'Marktführer', d: 'Über 40 % aller Webseiten weltweit laufen mit WordPress – rund 60 % Marktanteil unter den CMS.' },
+  { t: 'Flexibel & erweiterbar', d: 'Vom Onepager bis zur komplexen Unternehmensseite: WordPress wächst mit Ihren Anforderungen.' },
+  { t: 'Unabhängig', d: 'Sie pflegen Inhalte selbst und sind an keinen Baukasten gebunden – die Seite gehört Ihnen.' },
+  { t: 'SEO-freundlich', d: 'Eine ideale Basis für gute Google-Rankings, wenn sie richtig umgesetzt wird.' },
+];
+---
+
+<BaseLayout
+  title="WordPress Agentur » CodeRocker"
+  description="CodeRocker ist Ihre WordPress-Agentur mit über 11 Jahren Erfahrung. Wir erstellen, betreuen und optimieren Ihre WordPress-Webseite – inklusive SEO."
+  path="/leistungen/wordpress-agentur/"
+>
+  <PageHero
+    eyebrow="leistungen / wordpress"
+    title='Wir sind Ihre <span class="grad-text">Experten</span> für WordPress'
+    lead="Mit über 11 Jahren WordPress-Erfahrung betreuen wir kleine und mittlere Unternehmen in der gesamten DACH-Region – von der Region Salzburg aus."
+  >
+    <div class="hero-actions">
+      <a href="/kontakt/" class="btn btn--grad" data-open-form>WordPress-Projekt anfragen <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container split">
+      <figure class="wp-figure" data-reveal>
+        <Image src={wpImg} alt="WordPress CMS Webdesign" width={820} height={546} quality={85} />
+      </figure>
+      <div data-reveal>
+        <p class="kicker">ihre wordpress-agentur</p>
+        <h2>Das können wir für Sie tun</h2>
+        <p class="lead">
+          WordPress ist das beliebteste Content-Management-System der Welt – und wenn es richtig
+          aufgesetzt ist, eine starke Basis für Ihren Erfolg im Web. Wir holen das Beste daraus heraus.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">unsere leistungen</p>
+        <h2>Alles rund um WordPress</h2>
+      </div>
+      <div class="grid grid--2">
+        {leistungen.map((l) => (
+          <div class="card" data-reveal>
+            <h3>{l.t}</h3>
+            <p>{l.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section--center">
+        <p class="kicker">warum wordpress</p>
+        <h2>Die Vorteile auf einen Blick</h2>
+      </div>
+      <div class="grid grid--4">
+        {vorteile.map((v) => (
+          <div class="vorteil" data-reveal>
+            <h3>{v.t}</h3>
+            <p>{v.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink section--center cta-band">
+    <div class="container">
+      <h2>Ihre WordPress-Seite, professionell umgesetzt</h2>
+      <p class="lead">Ob Neubau, Relaunch oder Betreuung – wir sind Ihr Partner für WordPress.</p>
+      <a href="/kontakt/" class="btn btn--grad" data-open-form>Jetzt anfragen <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-actions { margin-top: 2rem; }
+  .cta-band .lead { margin-inline: auto; margin-bottom: 2rem; color: var(--ink-soft); }
+  .cta-band h2 { margin-bottom: 0.75rem; }
+  .split { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .wp-figure { margin: 0; border-radius: var(--radius); overflow: hidden; }
+  .wp-figure :global(img) { width: 100%; height: auto; }
+  .vorteil h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+  .vorteil p { font-size: 0.95rem; margin: 0; }
+  @media (max-width: 820px) { .split { grid-template-columns: 1fr; } }
+</style>
