@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logoWhite from '../assets/images/logo-white.png';
+import ObfuscatedEmail from './ObfuscatedEmail.astro';
 import { site, footerLinks } from '../data/site';
 const year = new Date().getFullYear();
 ---
@@ -17,7 +18,7 @@ const year = new Date().getFullYear();
       <h3>Kontakt</h3>
       <address>
         {site.city}, {site.country}<br />
-        <a href={`mailto:${site.email}`}>{site.email}</a><br />
+        <ObfuscatedEmail /><br />
         <span class="muted">{site.hours}</span>
       </address>
       <p class="footer-anfrage"><button type="button" class="footer-link-btn" data-open-form>Projektanfrage →</button></p>

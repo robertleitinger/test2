@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ObfuscatedEmail from '../components/ObfuscatedEmail.astro';
 import { site } from '../data/site';
 
 interface Props {
@@ -69,7 +70,6 @@ const jsonLd = {
       name: site.name,
       description,
       url: site.url,
-      email: site.email,
       telephone: site.phone,
       image: ogImageUrl,
       priceRange: '€€',
@@ -147,7 +147,7 @@ const jsonLd = {
           <p class="kicker">projektanfrage</p>
           <h2 id="form-modal-title">Erzählen Sie uns von Ihrem Projekt</h2>
           <p>Schreiben Sie uns einfach eine kurze Nachricht zu Ihrem Vorhaben – wir melden uns zeitnah mit den nächsten Schritten. Das Erstgespräch ist kostenlos und unverbindlich.</p>
-          <a class="form-modal__mail" href={`mailto:${site.email}`}>{site.email} <span class="arrow" aria-hidden="true">→</span></a>
+          <ObfuscatedEmail class="form-modal__mail"> <span class="arrow" aria-hidden="true">→</span></ObfuscatedEmail>
         </div>
       </div>
     </div>

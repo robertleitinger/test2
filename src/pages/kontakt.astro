@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
+import ObfuscatedEmail from '../components/ObfuscatedEmail.astro';
 import { site } from '../data/site';
 ---
 
@@ -34,7 +35,7 @@ import { site } from '../data/site';
         <p>
           Sie haben eine kurze Frage? Schreiben Sie uns:
         </p>
-        <p><a class="contact-mail" href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p><ObfuscatedEmail class="contact-mail" /></p>
         <p class="contact-region">
           Wir betreuen Kunden im gesamten deutschsprachigen Raum – ortsunabhängig per
           Video-Call, Telefon und E-Mail. Persönliche Termine im Office gerne nach Vereinbarung.

@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
+import ObfuscatedEmail from '../components/ObfuscatedEmail.astro';
 import { site } from '../data/site';
 
 import robert from '../assets/images/robert-about.jpg';
@@ -105,7 +106,7 @@ const office = [office1, office2, office3, office4, office5];
         <p class="kicker">kontakt</p>
         {site.street}<br />
         {site.postalCode} {site.city}, {site.country}<br /><br />
-        <a href={`mailto:${site.email}`}>{site.email}</a><br />
+        <ObfuscatedEmail /><br />
         <span class="muted">{site.hours}</span>
       </address>
     </div>
