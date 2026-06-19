@@ -41,6 +41,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # Der FTP-Zugang landet bereits im Web-Root der Subdomain,
+          # daher direkt dorthin deployen (kein public_html-Unterordner).
+          server-dir: ./
           local-dir: ./dist/
           protocol: ftp
