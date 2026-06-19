@@ -1,0 +1,46 @@
+name: Deploy to Hostinger
+
+# Baut die Astro-Seite und lädt sie per FTP auf die Hostinger-Subdomain.
+# Läuft automatisch bei jedem Push auf einen claude/**-Branch (und auf main),
+# sowie manuell über den "Run workflow"-Button.
+on:
+  push:
+    branches:
+      - 'claude/**'
+      - main
+  workflow_dispatch:
+
+# Verhindert, dass sich zwei Deploys gleichzeitig in die Quere kommen.
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Default-Build = Staging/noindex (kein PUBLIC_SITE_LIVE gesetzt).
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          local-dir: ./dist/
+          protocol: ftp
