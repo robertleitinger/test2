@@ -50,7 +50,7 @@ const refs = [
         <span class="rating-label">Top bewertet von unseren Kunden</span>
       </div>
     </div>
-    <div class="hero-scroll" aria-hidden="true"><span></span>scroll</div>
+    <a class="hero-scroll" href="#weiter" aria-label="Zum Inhalt scrollen"><span></span>scroll</a>
   </section>
 
   <!-- KINETIC TYPE -->
@@ -71,7 +71,7 @@ const refs = [
 
 
   <!-- FOKUS: WEBSEITEN-ERSTELLUNG -->
-  <section class="section">
+  <section class="section" id="weiter">
     <div class="container split">
       <div data-reveal="left">
         <p class="kicker">das machen wir</p>
@@ -180,6 +180,8 @@ const refs = [
   }
   .hero-scroll span { width: 1px; height: 38px; background: linear-gradient(var(--magenta), transparent); animation: scrollPulse 2s ease-in-out infinite; }
   @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
+  /* Sprungziel des Scrollhinweis – Offset für den fixierten Header */
+  #weiter { scroll-margin-top: 88px; }
 
   /* SPLIT (Fokus) */
   .split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
@@ -219,9 +221,14 @@ const refs = [
   @media (max-width: 820px) {
     .split { grid-template-columns: 1fr; }
     .hero { min-height: auto; }
-    /* Mobile-H1: kleiner + 3 Zeilen "Webdesign und / Online Marketing / das rockt!" */
-    .hero-title { font-size: clamp(2rem, 8.5vw, 2.7rem); line-height: 1.08; }
+    /* Mobile-H1: etwas größer; Lead etwas kleiner */
+    .hero-title { font-size: clamp(2.3rem, 9.5vw, 3.2rem); line-height: 1.07; }
     .hero-title .line { display: inline; overflow: visible; }
     .br-m { display: inline; }
+    .hero-lead { font-size: 1rem; }
+    /* Scrollhinweis weiter nach unten */
+    .hero-scroll { bottom: 0.5rem; }
+    /* Wort-Band ("Slider") auf Mobile ausblenden */
+    .kinetic { display: none; }
   }
 </style>

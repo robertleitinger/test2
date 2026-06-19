@@ -20,8 +20,9 @@ const included = [
 ];
 
 const packages = [
-  { name: 'Express', price: 'ab 1.390 €', desc: 'Der schnelle, starke und kostengünstige Auftritt für Selbstständige und KMUs.', features: ['Individuelles Design', 'Responsive & DSGVO-konform', 'Für Google & KI optimiert', 'Schnelle Ladezeit', 'Umfang ca. 3 bis 4 Seiten', 'Weitere Funktionen / Seiten gegen Aufpreis'], featured: true },
-  { name: 'Premium', price: 'ab 3.490 €', desc: 'Maximale Wirkung für anspruchsvolle Projekte und Unternehmen.', features: ['Erweiterter Funktionsumfang', 'Erweiterter Seitenumfang', 'System zur Selbstwartung', 'Individuelle Einschulung'] },
+  { name: 'OnePager', price: 'ab 949 €', desc: 'Eine starke einzelne Seite – ideal, um schnell professionell online zu sein.', features: ['Einzelne Seite (Onepager)', 'Individuelles Design', 'Responsive & DSGVO-konform', 'Für Google & KI optimiert', 'In wenigen Tagen online'] },
+  { name: 'Express', price: 'ab 1.490 €', desc: 'Der schnelle, starke und kostengünstige Auftritt für Selbstständige und KMUs.', features: ['Individuelles Design', 'Responsive & DSGVO-konform', 'Für Google & KI optimiert', 'Schnelle Ladezeit', 'In wenigen Tagen online', 'Umfang ca. 3 bis 4 Seiten', 'Weitere Funktionen / Seiten gegen Aufpreis'], featured: true },
+  { name: 'Premium', price: 'ab 3.490 €', desc: 'Maximale Wirkung für anspruchsvolle Projekte und Unternehmen.', features: ['Alles aus Express +', 'Erweiterter Funktionsumfang', 'Erweiterter Seitenumfang', 'System zur Selbstwartung', 'Individuelle Einschulung', 'CMS System (z. B. WordPress)'] },
 ];
 
 const weitere = [
@@ -159,7 +160,7 @@ const weitere = [
   .check-list--plus li::before { content: '+'; }
   .tech-note { margin: 2.5rem 0 0; text-align: center; color: var(--ink-faint); font-size: 0.95rem; }
 
-  .price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; align-items: stretch; max-width: 760px; margin-inline: auto; }
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.75rem; align-items: stretch; max-width: 1080px; margin-inline: auto; }
   .price-card { position: relative; background: var(--surface-glass); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.25rem 2rem; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
   /* Reveal-clip-path aufheben, damit das oben überstehende "Beliebt"-Badge nicht abgeschnitten wird */
   .price-card.is-visible { clip-path: none; }

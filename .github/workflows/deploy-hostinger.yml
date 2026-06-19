@@ -8,6 +8,11 @@ on:
     branches:
       - 'claude/**'
       - main
+    # Reine Doku-/Markdown-Änderungen lösen keinen Deploy aus (spart Builds
+    # und schont das FTP-Rate-Limit von Hostinger).
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
   workflow_dispatch:
 
 # Verhindert, dass sich zwei Deploys gleichzeitig in die Quere kommen.
