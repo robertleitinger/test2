@@ -8,9 +8,11 @@ Dieses System wird in Phasen aufgebaut. Die Live-Website bleibt dabei das **lebe
 - `course/start-here.md`, `course/perfektion-checkliste.md`, diese Roadmap.
 - Mega-Prompt-Bibliothek in `course/instructions/` (Start: Seite anlegen, Text ändern, veröffentlichen, Style-Brief).
 
-## ⏳ Phase 2 — Design-/Stil-Vorgabe-System
-- Design-Tokens als einzige Stil-Quelle + 3–4 fertige Style-Presets („Clean Hell", „Dark Tech", „Warm Editorial").
-- Mega-Prompt „Style-Brief": Look in normalen Worten bestellen → KI setzt die Tokens.
+## ✅ Phase 2 — Design-/Stil-Vorgabe-System
+- Standalone-Design-System in `course/design-system/`: voll-tokenisierte `tokens.css`, `demo.css` (nur Tokens), `preview.html` (Vorschau ohne Build) und `README.md`.
+- 4 fertige Presets: **Dark Signature**, **Dark Ocean**, **Clean Light**, **Warm Editorial**.
+- Mega-Prompts: `design-preset-waehlen.md` (Preset wählen) + `style-brief.md` (eigenen Look beschreiben).
+- Live-Site-Look bewusst unangetastet; das System ist die Vorlage für den Starter (Phase 4).
 
 ## ⏳ Phase 3 — Wartung & Staging
 - Staging-Workflow (Testseite vor Live) verständlich erklärt.

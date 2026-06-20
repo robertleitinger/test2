@@ -20,6 +20,9 @@ Alle Prompts sind **tool-neutral** — sie funktionieren mit Claude Code, Claude
 | `01-neue-seite-anlegen.md` | Eine neue Unterseite erstellen |
 | `02-text-aendern.md` | Bestehenden Text/Inhalt ändern |
 | `08-deploy-veroeffentlichen.md` | Seite live stellen (beide Wege) |
-| `style-brief.md` | Den Look/Stil der Seite vorgeben |
+| `design-preset-waehlen.md` | Fertigen Design-Look (Preset) auswählen |
+| `style-brief.md` | Eigenen Look/Stil frei vorgeben |
 
+> Design-Looks zum Ansehen & Auswählen liegen in `course/design-system/` (inkl. `preview.html`).
+>
 > Weitere Prompts (Bilder einfügen, SEO-Meta, strukturierte Daten, neue Region/Referenz) folgen in den nächsten Phasen — siehe `course/roadmap.md`.

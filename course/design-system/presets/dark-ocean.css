@@ -1,0 +1,36 @@
+/* PRESET: Dark Ocean — dunkel, ruhig, Teal/Cyan-Akzent (Beratung, Tech, Klinik). */
+:root {
+  --accent: #15b8a6;
+  --accent-strong: #0e8d80;
+  --accent-2: #38e0cf;
+  --grad: linear-gradient(135deg, #0b6e64 0%, #15b8a6 55%, #38e0cf 100%);
+  --grad-soft: linear-gradient(135deg, #15b8a6 0%, #38e0cf 100%);
+
+  --bg: #050b0b;
+  --bg-deep: #000000;
+  --surface: #0f1a1a;
+  --card-bg: rgba(255, 255, 255, 0.045);
+  --ghost-bg: rgba(255, 255, 255, 0.03);
+
+  --ink: #ffffff;
+  --text: #e4f0ee;
+  --text-soft: #a9c2bf;
+  --on-accent: #04201d;
+
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  --shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.7);
+  --shadow-brand: 0 28px 70px -22px rgba(21, 184, 166, 0.45);
+  --glow: 0 0 40px -8px rgba(21, 184, 166, 0.5);
+  --scrim: rgba(0, 0, 0, 0.6);
+
+  --font-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --maxw: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --radius: 18px;
+  --radius-sm: 12px;
+}

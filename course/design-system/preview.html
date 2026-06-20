@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design-System – Vorschau</title>
+
+  <!-- 1) Das Preset bestimmt den LOOK (Farben/Schriften). Zum Wechseln
+          oben rechts auswählen – oder hier die Datei direkt tauschen. -->
+  <link id="preset" rel="stylesheet" href="presets/dark-signature.css" />
+  <!-- 2) Die Komponenten-Stile nutzen nur Tokens und bleiben gleich. -->
+  <link rel="stylesheet" href="demo.css" />
+
+  <style>
+    /* Nur für diese Vorschauseite: der Preset-Umschalter oben rechts. */
+    .switcher {
+      position: fixed; top: 1rem; right: 1rem; z-index: 50;
+      display: flex; align-items: center; gap: 0.5rem;
+      background: var(--card-bg); border: 1px solid var(--line-strong);
+      border-radius: 999px; padding: 0.5rem 0.9rem;
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-soft);
+      backdrop-filter: blur(8px);
+    }
+    .switcher select {
+      font: inherit; color: var(--ink); background: transparent;
+      border: 0; cursor: pointer;
+    }
+    .switcher select option { color: #000; }
+  </style>
+</head>
+<body>
+  <div class="switcher">
+    Look:
+    <select id="presetSelect" aria-label="Design-Preset wählen">
+      <option value="presets/dark-signature.css">Dark Signature</option>
+      <option value="presets/dark-ocean.css">Dark Ocean</option>
+      <option value="presets/clean-light.css">Clean Light</option>
+      <option value="presets/warm-editorial.css">Warm Editorial</option>
+    </select>
+  </div>
+
+  <header class="section hero">
+    <div class="container">
+      <span class="kicker">Design-System · Vorschau</span>
+      <h1>Dein Look. <span class="grad-text">Eine Datei.</span> Null CSS-Wissen.</h1>
+      <p class="lead">
+        Diese ganze Seite bekommt ihr Aussehen aus den Design-Tokens. Wechsle oben
+        rechts das Preset – Farben, Akzente und Schriften ändern sich überall auf
+        einmal, ohne dass am Inhalt etwas angefasst wird.
+      </p>
+      <div class="btn-row">
+        <a class="btn" href="#">Projekt anfragen →</a>
+        <a class="btn btn--ghost" href="#">Mehr erfahren</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--tint">
+    <div class="container">
+      <hr class="rule" />
+      <h2>Wiederverwendbare Bausteine</h2>
+      <p class="lead">Buttons, Karten und Sektionen – alle nur aus Tokens gebaut.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Schnell</h3>
+          <p>Statisch gebaut, lokal gehostete Schriften, optimierte Bilder – Topspeed.</p>
+        </article>
+        <article class="card">
+          <h3>Auffindbar</h3>
+          <p>Saubere Meta-Daten, strukturierte Daten und llms.txt – perfekt für Suche und KI.</p>
+        </article>
+        <article class="card">
+          <h3>Pflegeleicht</h3>
+          <p>Eine Quelle der Wahrheit für Inhalte und Design. Ändern an einer Stelle, wirkt überall.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="kicker">So funktioniert's</span>
+      <h2>Look wechseln in einem Schritt</h2>
+      <p class="lead">
+        In deinem echten Projekt ersetzt du die Werte in <code>tokens.css</code> durch
+        ein Preset aus <code>presets/</code> – oder du nutzt den Style-Brief-Mega-Prompt
+        und beschreibst den gewünschten Look in normalen Worten.
+      </p>
+    </div>
+  </section>
+
+  <footer class="section">
+    <div class="container">
+      <p>Design-System-Vorschau · Teil des KI-Webdesign-Kurses</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nur für die Vorschau: Auswahl tauscht das Preset-Stylesheet aus.
+    document.getElementById('presetSelect').addEventListener('change', function (e) {
+      document.getElementById('preset').setAttribute('href', e.target.value);
+    });
+  </script>
+</body>
+</html>

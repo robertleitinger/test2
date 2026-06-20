@@ -1,0 +1,37 @@
+/* PRESET: Warm Editorial — warm, hochwertig, redaktionell (Coaching, Studio,
+   Gastro, Boutique). Cremefarbener Grund, Serifen-Überschriften, Amber-Akzent. */
+:root {
+  --accent: #b45309;
+  --accent-strong: #92400e;
+  --accent-2: #d97706;
+  --grad: linear-gradient(135deg, #92400e 0%, #b45309 55%, #d97706 100%);
+  --grad-soft: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+
+  --bg: #faf6f0;
+  --bg-deep: #f1e8db;
+  --surface: #f6efe6;
+  --card-bg: #fffdf9;
+  --ghost-bg: rgba(60, 40, 20, 0.04);
+
+  --ink: #2b2118;
+  --text: #4a3d30;
+  --text-soft: #7c6a58;
+  --on-accent: #fff7ed;
+
+  --line: rgba(60, 40, 20, 0.12);
+  --line-strong: rgba(60, 40, 20, 0.20);
+
+  --shadow: 0 20px 50px -24px rgba(60, 40, 20, 0.25);
+  --shadow-brand: 0 18px 44px -20px rgba(180, 83, 9, 0.30);
+  --glow: 0 8px 28px -14px rgba(180, 83, 9, 0.35);
+  --scrim: rgba(40, 28, 16, 0.5);
+
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-mono: ui-monospace, 'JetBrains Mono', monospace;
+
+  --maxw: 1140px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --radius: 14px;
+  --radius-sm: 10px;
+}
