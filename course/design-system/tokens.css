@@ -1,0 +1,58 @@
+/* =========================================================
+   DESIGN-TOKENS — die EINZIGE Stil-Quelle deiner Website
+   ---------------------------------------------------------
+   Hier stehen ALLE Farben, Schriften und Abstände als
+   "Variablen". Änderst du einen Wert hier, ändert sich der
+   Look überall – ohne dass du einzelne Seiten anfassen musst.
+
+   Dieser Satz = der Look "Dark Signature" (Standard).
+   Ein anderes Aussehen bekommst du, indem du die Werte hier
+   durch ein Preset aus dem Ordner ./presets/ ersetzt
+   (oder den Style-Brief-Mega-Prompt nutzt).
+
+   REGEL: Komponenten dürfen NUR diese Variablen verwenden,
+   niemals feste Farben wie #fff. So bleibt alles austauschbar.
+   ========================================================= */
+
+:root {
+  /* ---- Marke / Akzent (deine Signaturfarbe) ---- */
+  --accent: #5333ED;          /* Hauptakzent (Buttons, Links, Highlights) */
+  --accent-strong: #4526d4;   /* dunklere Variante – Start von Verläufen */
+  --accent-2: #7b5cff;        /* hellerer Akzent-Partner */
+  --grad: linear-gradient(135deg, #3a1faf 0%, #5333ED 55%, #6f4dff 100%);
+  --grad-soft: linear-gradient(135deg, #5333ED 0%, #7b5cff 100%);
+
+  /* ---- Flächen / Hintergründe ---- */
+  --bg: #050506;              /* Seiten-Hintergrund */
+  --bg-deep: #000000;         /* tiefste Sektionen / Footer */
+  --surface: #121219;         /* abgesetzte Panels / getönte Sektionen */
+  --card-bg: rgba(255, 255, 255, 0.045); /* Karten-Oberfläche */
+  --ghost-bg: rgba(255, 255, 255, 0.03); /* dezente "Ghost"-Buttons */
+
+  /* ---- Text ---- */
+  --ink: #ffffff;             /* Überschriften / starker Text */
+  --text: #ececf3;            /* normaler Fließtext */
+  --text-soft: #b7b7c6;       /* Nebentext / Bildunterschriften */
+  --on-accent: #ffffff;       /* Text AUF Akzentflächen (z. B. Button-Text) */
+
+  /* ---- Linien / Rahmen ---- */
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  /* ---- Schatten / Leuchten / Abdunkler ---- */
+  --shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.7);
+  --shadow-brand: 0 28px 70px -22px rgba(83, 51, 237, 0.55);
+  --glow: 0 0 40px -8px rgba(83, 51, 237, 0.5);
+  --scrim: rgba(0, 0, 0, 0.6); /* halbtransparenter Schleier über Bildern */
+
+  /* ---- Schriften ---- */
+  --font-display: 'Sora', 'Segoe UI', system-ui, sans-serif; /* Überschriften */
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif; /* Fließtext */
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;     /* Labels/Code */
+
+  /* ---- Layout (Maße) ---- */
+  --maxw: 1200px;             /* maximale Inhaltsbreite */
+  --gutter: clamp(1.25rem, 4vw, 2.5rem); /* Seitenrand */
+  --radius: 18px;             /* Ecken-Rundung */
+  --radius-sm: 12px;
+}

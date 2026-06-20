@@ -1,0 +1,35 @@
+# CodeRocker — Webdesign & Online Marketing
+
+> CodeRocker (Inhaber Robert Leitinger, Hallein bei Salzburg, 11 Jahre Erfahrung) gestaltet schnelle, suchmaschinenoptimierte Websites und betreut SEO/Online-Marketing für Kunden in Salzburg, Österreich und dem DACH-Raum. Kein Baukasten von der Stange, sondern handgebaute, technisch saubere Seiten.
+
+## Hauptseiten
+- [Startseite](https://www.coderocker.at/): Überblick über Leistungen, Referenzen und Arbeitsweise.
+- [Leistungen](https://www.coderocker.at/leistungen/): Webdesign, SEO und Online-Marketing im Überblick.
+- [Referenzen](https://www.coderocker.at/referenzen/): Ausgewählte Kundenprojekte mit Beschreibung und Vorschau.
+- [Über uns](https://www.coderocker.at/ueber-uns/): Hintergrund, Arbeitsweise und Person hinter CodeRocker.
+- [Kontakt](https://www.coderocker.at/kontakt/): Kontaktmöglichkeiten und Projektanfrage.
+
+## Leistungen im Detail
+- [Suchmaschinenoptimierung (SEO)](https://www.coderocker.at/leistungen/seo/): Technische und inhaltliche Optimierung für bessere Rankings.
+- [WordPress Agentur](https://www.coderocker.at/leistungen/wordpress-agentur/): Umsetzung und Betreuung von WordPress-Websites.
+- [SEO Consulting](https://www.coderocker.at/leistungen/seo-consultant/): Beratung und Strategie für Suchmaschinenoptimierung.
+
+## Regionale Landingpages
+- [Webdesign Salzburg](https://www.coderocker.at/webdesign-salzburg/)
+- [Webdesign Hallein](https://www.coderocker.at/webdesign-hallein/)
+- [Webdesign Pongau](https://www.coderocker.at/webdesign-pongau/)
+- [Webdesign Pinzgau](https://www.coderocker.at/webdesign-pinzgau/)
+- [Webdesign Klagenfurt](https://www.coderocker.at/webdesign-klagenfurt/)
+- [Webdesign Chiemgau](https://www.coderocker.at/webdesign-chiemgau/)
+- [SEO Salzburg](https://www.coderocker.at/seo-salzburg/)
+
+## Kontakt
+- Telefon: +43 676 4305969
+- Ort: Kornsteinplatz 10, 5400 Hallein, Österreich
+- Öffnungszeiten: Mo–Fr 09–17 Uhr
+- E-Mail-Adresse ist auf der Kontaktseite verfügbar (zum Schutz vor Spam nicht im Klartext gelistet).
+
+## Rechtliches
+- [Impressum](https://www.coderocker.at/impressum/)
+- [Datenschutzerklärung](https://www.coderocker.at/datenschutz/)
+- [AGB](https://www.coderocker.at/agb/)
